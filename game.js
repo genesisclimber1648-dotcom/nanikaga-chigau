@@ -84,7 +84,7 @@
     { src: "assets/scene64.jpg", target: { x: 0.328, y: 0.194, w: 0.108, h: 0.056 }, explanation: "サメが咥えている物は……？" },
     { src: "assets/scene65.jpg", target: { x: 0.295, y: 0.470, w: 0.123, h: 0.048 }, explanation: "その魚だけ本物ではないようだ" },
     { src: "assets/scene66.jpg", target: { x: 0.791, y: 0.132, w: 0.095, h: 0.055 }, explanation: "その手は……？" },
-    { src: "assets/scene67.jpg", target: { x: 0.118, y: 0.318, w: 0.083, h: 0.047 }, explanation: "お洒落な鳩だ" },
+    { src: "assets/scene67_v37.jpg", target: { x: 0.118, y: 0.318, w: 0.083, h: 0.047 }, explanation: "お洒落な鳩だ" },
     { src: "assets/scene68.jpg", target: { x: 0.000, y: 0.630, w: 0.086, h: 0.042 }, explanation: "車を搬入した際に轢かれた者がいるようだ……" },
     { src: "assets/scene69.jpg", target: { x: 0.738, y: 0.237, w: 0.063, h: 0.035 }, explanation: "こんにちは！！" },
   ];
