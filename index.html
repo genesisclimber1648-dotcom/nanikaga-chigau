@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#050507" />
+  <title>It feels off</title>
+  <link rel="stylesheet" href="style.css?v=20260927-v35-69" />
+</head>
+<body>
+  <main class="app" id="app">
+    <section class="start-screen" id="startPanel" role="button" tabindex="0" aria-label="ゲームをスタート">
+      <img id="secretEditorTrigger" class="title-logo" src="assets/title_logo.png" alt="It feels off" draggable="false" />
+      <div class="simple-rules" aria-label="ルール">
+        <p>画像の中の「違和感」をタップ</p>
+        <p>3回ミスするとゲームオーバー</p>
+        <p class="start-note">画面をタップしてスタート</p>
+        <button class="secondary start-stage-select hidden" id="stageSelectButton" type="button">ステージ選択</button>
+      </div>
+    </section>
+
+    <section class="panel stage-select-panel hidden" id="stageSelectPanel">
+      <h2>ステージ選択</h2>
+      <div class="stage-grid" id="stageGrid"></div>
+      <div class="menu-actions compact-actions">
+        <button class="secondary hidden" id="stageEditButton" type="button" aria-hidden="true" tabindex="-1">当たり判定を調整</button>
+        <button class="secondary" id="stageBackButton" type="button">戻る</button>
+      </div>
+    </section>
+
+    <section class="game hidden" id="gamePanel" aria-live="polite">
+      <div class="minimal-hud" aria-label="ゲーム情報">
+        <span id="stageText">01 / 70</span>
+        <div class="minimal-actions">
+          <button class="icon-button" id="soundToggleButton" type="button" aria-pressed="true" aria-label="BGMと効果音を切り替える">🔊</button>
+          <button class="icon-button" id="quitButton" type="button" aria-label="メニューへ戻る">×</button>
+        </div>
+      </div>
+
+      <div class="image-shell" id="imageShell">
+        <img id="sceneImage" alt="違和感を探すゲーム画像" draggable="false" />
+        <div id="markerLayer" class="marker-layer" aria-hidden="true"></div>
+        <div id="loading" class="loading">LOADING...</div>
+      </div>
+
+      <div class="answer-overlay hidden" id="answerOverlay" role="dialog" aria-modal="true" aria-label="正解解説">
+        <div class="answer-card">
+          <div class="answer-head">
+            <div class="answer-symbol"><img src="assets/correct.png" alt="正解" /></div>
+            <div class="answer-head-copy">
+              <div class="answer-stage-label" id="answerStageLabel">STAGE 1</div>
+            </div>
+          </div>
+          <canvas id="answerPreview" class="answer-preview" role="img" aria-label="正解部分のアップ画像"></canvas>
+          <p class="answer-caption">正解部分のアップ</p>
+          <p class="answer-text" id="answerText"></p>
+          <button class="primary answer-next-button" id="answerNextButton" type="button">次のステージへ</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel editor-panel hidden" id="editorPanel">
+      <div class="badge">HITBOX EDITOR</div>
+      <h2>当たり判定調整</h2>
+      <p class="lead">画像上をドラッグして正解範囲を囲んでください。下のボタンで少しずつ微調整できます。</p>
+
+      <div class="editor-topbar">
+        <button class="secondary slim" id="editorPrevButton" type="button">← 前の画像</button>
+        <div class="editor-stage-label" id="editorStageLabel">STAGE 1 / 70</div>
+        <button class="secondary slim" id="editorNextButton" type="button">次の画像 →</button>
+      </div>
+
+      <div class="editor-shell" id="editorShell">
+        <img id="editorImage" alt="当たり判定調整用画像" draggable="false" />
+        <div class="editor-overlay" id="editorOverlay">
+          <div class="edit-rect" id="editRect"></div>
+        </div>
+        <div id="editorLoading" class="loading">LOADING...</div>
+      </div>
+
+      <p class="editor-caption">赤い枠が現在の当たり判定です。</p>
+      <div class="editor-values" id="editorValues">x: 0.000 / y: 0.000 / w: 0.000 / h: 0.000</div>
+
+      <div class="editor-controls-grid">
+        <button class="secondary" type="button" data-edit="up">↑ 上へ</button>
+        <button class="secondary" type="button" data-edit="down">↓ 下へ</button>
+        <button class="secondary" type="button" data-edit="left">← 左へ</button>
+        <button class="secondary" type="button" data-edit="right">→ 右へ</button>
+        <button class="secondary" type="button" data-edit="wider">幅 +</button>
+        <button class="secondary" type="button" data-edit="narrower">幅 −</button>
+        <button class="secondary" type="button" data-edit="taller">高さ +</button>
+        <button class="secondary" type="button" data-edit="shorter">高さ −</button>
+      </div>
+
+      <section class="explanation-editor" aria-label="正解時の説明テキスト編集">
+        <h3>正解時の説明テキスト</h3>
+        <textarea id="editorExplanation" rows="5" maxlength="500" placeholder="このステージの解説文を入力"></textarea>
+        <div class="explanation-editor-actions">
+          <button class="primary" id="editorExplanationSaveButton" type="button">説明文を保存</button>
+          <button class="secondary" id="editorExplanationResetButton" type="button">初期文に戻す</button>
+        </div>
+      </section>
+
+      <div class="menu-actions editor-actions">
+        <button class="secondary" id="editorResetButton" type="button">この画像を初期値に戻す</button>
+        <button class="secondary" id="editorCopyCurrentButton" type="button">この画像の座標をコピー</button>
+        <button class="secondary" id="editorCopyAllButton" type="button">全画像の座標をコピー</button>
+        <button class="primary" id="editorPlayButton" type="button">この画像をテストプレイ</button>
+        <button class="secondary" id="editorBackButton" type="button">メニューへ戻る</button>
+      </div>
+    </section>
+
+    <section class="panel result-panel result-wide hidden" id="resultPanel">
+      <div class="result-symbol" id="resultSymbol"><img src="assets/correct.png" alt="正解"></div>
+      <h2 id="resultTitle">GAME CLEAR!</h2>
+      <p id="resultMessage"></p>
+      <div class="score-card">
+        <span>クリア数</span><strong id="clearCount">0 / 70</strong>
+        <span>合計ミス</span><strong id="missCount">0</strong>
+      </div>
+
+      <div class="menu-actions result-actions">
+        <button class="primary" id="retryButton" type="button">もう一度最初から</button>
+        <button class="secondary" id="resultStageSelectButton" type="button">ステージ選択</button>
+        <button class="secondary hidden" id="resultEditButton" type="button" aria-hidden="true" tabindex="-1">当たり判定を調整</button>
+      </div>
+    </section>
+
+    <div class="toast hidden" id="toast" role="status"></div>
+  </main>
+
+  <script src="game.js?v=20260927-v35-69"></script>
+</body>
+</html>
