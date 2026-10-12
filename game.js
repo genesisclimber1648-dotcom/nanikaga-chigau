@@ -1,15 +1,18 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_tap_progress_v35_69stages';
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v35_69stages';
-  const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v35_69stages';
-  const PREVIOUS_STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v34_69stages';
+  const STORAGE_KEY = 'iwakan_targets_v51_by_src';
+  const LEGACY_TARGET_STORAGE_KEYS = []; // v51 uses the supplied reviewed defaults.
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v51_by_src';
+  const LEGACY_EXPLANATION_STORAGE_KEYS = [];
+  const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
+  const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
+  const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
   const CORRECT_ICON_SRC = 'assets/correct.png';
   const WRONG_ICON_SRC = 'assets/wrong.png';
-  const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3'];
+  const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
   const correctIconPreload = new Image();
@@ -18,76 +21,1266 @@
   wrongIconPreload.src = WRONG_ICON_SRC;
 
   const defaultStages = [
-    { src: "assets/scene1.jpg", target: { x: 0.130, y: 0.679, w: 0.634, h: 0.249 }, explanation: "「お腹減ったな……」\n彼女にはグローブが食べ物に見えているようだ" },
-    { src: "assets/scene2.jpg", target: { x: 0.685, y: 0.411, w: 0.309, h: 0.381 }, explanation: "お巡りさん来てください！\n変な制服を着たお巡りさんが……！！" },
-    { src: "assets/scene3.jpg", target: { x: 0.109, y: 0.311, w: 0.287, h: 0.406 }, explanation: "壁に移る影がおかしい\n影ではない何かだろうか……" },
-    { src: "assets/scene4.jpg", target: { x: 0.329, y: 0.567, w: 0.334, h: 0.318 }, explanation: "汗かき過ぎなのでは……？" },
-    { src: "assets/scene5.jpg", target: { x: 0.302, y: 0.742, w: 0.476, h: 0.179 }, explanation: "これは……\n何の足跡だろうか……？" },
-    { src: "assets/scene6.jpg", target: { x: 0.495, y: 0.758, w: 0.393, h: 0.213 }, explanation: "このスーパーは品揃えがいいと評判だ" },
-    { src: "assets/scene7.jpg", target: { x: 0.375, y: 0.081, w: 0.284, h: 0.276 }, explanation: "奇麗な星空には、人知を超えた何かが顕現しているかもしれない……" },
-    { src: "assets/scene8.jpg", target: { x: 0.758, y: 0.241, w: 0.172, h: 0.449 }, explanation: "昼下がりの情事……？" },
-    { src: "assets/scene9.jpg", target: { x: 0.671, y: 0.055, w: 0.327, h: 0.212 }, explanation: "歯科医院にこんな道具が置いてあるのだろうか……？" },
-    { src: "assets/scene10.jpg", target: { x: 0.439, y: 0.801, w: 0.340, h: 0.148 }, explanation: "それは……\nホットドッグではないようだ" },
-    { src: "assets/scene11.jpg", target: { x: 0.524, y: 0.162, w: 0.323, h: 0.148 }, explanation: "クラーケン襲来！！" },
-    { src: "assets/scene12.jpg", target: { x: 0.164, y: 0.576, w: 0.286, h: 0.162 }, explanation: "後の女性は何者だろうか……？" },
-    { src: "assets/scene13.jpg", target: { x: 0.613, y: 0.140, w: 0.347, h: 0.133 }, explanation: "その人はこれから何を食べるつもりなのだろうか……？" },
-    { src: "assets/scene14.jpg", target: { x: 0.488, y: 0.130, w: 0.344, h: 0.134 }, explanation: "トレーナーの首に……" },
-    { src: "assets/scene15.jpg", target: { x: 0.306, y: 0.172, w: 0.577, h: 0.079 }, explanation: "その湖には古代生物の生き残りが潜んでいるという噂がある" },
-    { src: "assets/scene16.jpg", target: { x: 0.836, y: 0.191, w: 0.160, h: 0.273 }, explanation: "鏡の中の私\n鏡写しになっていないけれど……" },
-    { src: "assets/scene17.jpg", target: { x: 0.669, y: 0.252, w: 0.280, h: 0.152 }, explanation: "おばあちゃん、箸はいらないの……？" },
-    { src: "assets/scene18.jpg", target: { x: 0.570, y: 0.161, w: 0.257, h: 0.156 }, explanation: "ネギの勇者" },
-    { src: "assets/scene19.jpg", target: { x: 0.634, y: 0.679, w: 0.366, h: 0.106 }, explanation: "その鶏肉、洗ったの……？" },
-    { src: "assets/scene20.jpg", target: { x: 0.024, y: 0.767, w: 0.285, h: 0.135 }, explanation: "その尻尾は一体……？" },
-    { src: "assets/scene21.jpg", target: { x: 0.662, y: 0.135, w: 0.195, h: 0.193 }, explanation: "背中、背中……！！" },
-    { src: "assets/scene22.jpg", target: { x: 0.153, y: 0.614, w: 0.277, h: 0.135 }, explanation: "リンゴの中にボウリング球が混じっている……" },
-    { src: "assets/scene23.jpg", target: { x: 0.672, y: 0.218, w: 0.219, h: 0.137 }, explanation: "クラゲに混じってレジ袋が浮いている……" },
-    { src: "assets/scene24.jpg", target: { x: 0.776, y: 0.257, w: 0.224, h: 0.129 }, explanation: "ゴリラにも職業選択の自由……？" },
-    { src: "assets/scene25.jpg", target: { x: 0.814, y: 0.196, w: 0.186, h: 0.154 }, explanation: "この食肉加工場には色々な動物の肉が入荷する\n時々この世のものではない獣の肉も入荷するようだ" },
-    { src: "assets/scene26.jpg", target: { x: 0.052, y: 0.506, w: 0.262, h: 0.104 }, explanation: "ドーナツショップのショーケースだが……\nそれはドーナツではないようだ" },
-    { src: "assets/scene27.jpg", target: { x: 0.663, y: 0.315, w: 0.179, h: 0.152 }, explanation: "覗かれている……" },
-    { src: "assets/scene28.jpg", target: { x: 0.380, y: 0.566, w: 0.223, h: 0.122 }, explanation: "浦島太郎……？" },
-    { src: "assets/scene29.jpg", target: { x: 0.062, y: 0.694, w: 0.190, h: 0.137 }, explanation: "お主、本当に人間か……？" },
-    { src: "assets/scene30.jpg", target: { x: 0.450, y: 0.150, w: 0.200, h: 0.130 }, explanation: "何者かが螺旋階段の上から見下ろしている……" },
-    { src: "assets/scene31.jpg", target: { x: 0.443, y: 0.692, w: 0.226, h: 0.114 }, explanation: "現像中の写真に現像中の写真が……" },
-    { src: "assets/scene32.jpg", target: { x: 0.079, y: 0.158, w: 0.156, h: 0.158 }, explanation: "それはパンじゃないよ！\n借り物競争じゃないから！！" },
-    { src: "assets/scene33.jpg", target: { x: 0.670, y: 0.617, w: 0.215, h: 0.106 }, explanation: "蠅の王がいる" },
-    { src: "assets/scene34.jpg", target: { x: 0.099, y: 0.128, w: 0.078, h: 0.283 }, explanation: "不審な人影が見える……" },
-    { src: "assets/scene35.jpg", target: { x: 0.772, y: 0.821, w: 0.170, h: 0.128 }, explanation: "カーテンの下から誰かの足が……" },
-    { src: "assets/scene36.jpg", target: { x: 0.728, y: 0.104, w: 0.153, h: 0.138 }, explanation: "一緒に食べる……？" },
-    { src: "assets/scene37.jpg", target: { x: 0.004, y: 0.082, w: 0.124, h: 0.164 }, explanation: "窓から誰かが覗いている……" },
-    { src: "assets/scene38.jpg", target: { x: 0.268, y: 0.611, w: 0.243, h: 0.081 }, explanation: "クローゼットの中に誰かが潜んでいる……" },
-    { src: "assets/scene39.jpg", target: { x: 0.000, y: 0.733, w: 0.149, h: 0.125 }, explanation: "置き配は便利だが、荷物が届いた直後には取りに行かない方が良さそうだ" },
-    { src: "assets/scene40.jpg", target: { x: 0.259, y: 0.375, w: 0.193, h: 0.094 }, explanation: "隣の人の絵に落書きをしてはいけません！" },
-    { src: "assets/scene41.jpg", target: { x: 0.784, y: 0.649, w: 0.142, h: 0.127 }, explanation: "公園には何が埋まっているか分からない" },
-    { src: "assets/scene42.jpg", target: { x: 0.809, y: 0.218, w: 0.117, h: 0.151 }, explanation: "おかしな形の鶏が紛れ込んでいる……" },
-    { src: "assets/scene43.jpg", target: { x: 0.754, y: 0.690, w: 0.128, h: 0.129 }, explanation: "そのボトルの中身は一体……？" },
-    { src: "assets/scene44.jpg", target: { x: 0.825, y: 0.658, w: 0.172, h: 0.096 }, explanation: "その男性はこの世の者ではなさそうだ……" },
-    { src: "assets/scene45.jpg", target: { x: 0.306, y: 0.416, w: 0.203, h: 0.078 }, explanation: "4人でファミレスに来たのだが……\n店員には3人しか見えていないようだ" },
-    { src: "assets/scene46.jpg", target: { x: 0.792, y: 0.382, w: 0.177, h: 0.089 }, explanation: "冷蔵庫の陰から、誰かの手が伸びている……" },
-    { src: "assets/scene47.jpg", target: { x: 0.304, y: 0.208, w: 0.116, h: 0.113 }, explanation: "それは誰の足なのか……" },
-    { src: "assets/scene48.jpg", target: { x: 0.811, y: 0.235, w: 0.097, h: 0.134 }, explanation: "サンドバッグに人の顔が浮かび上がっている……" },
-    { src: "assets/scene49.jpg", target: { x: 0.797, y: 0.010, w: 0.166, h: 0.076 }, explanation: "この公園には芸術的な街灯がある" },
-    { src: "assets/scene50.jpg", target: { x: 0.630, y: 0.396, w: 0.117, h: 0.103 }, explanation: "そのウサギだけやけに生々しいが……" },
-    { src: "assets/scene51.jpg", target: { x: 0.460, y: 0.619, w: 0.204, h: 0.056 }, explanation: "変わった形のハサミだ" },
-    { src: "assets/scene52.jpg", target: { x: 0.663, y: 0.438, w: 0.188, h: 0.057 }, explanation: "車の下に何かがしがみついている" },
-    { src: "assets/scene53.jpg", target: { x: 0.734, y: 0.777, w: 0.154, h: 0.065 }, explanation: "電源プラグが抜けているが、画面に写っている映像は一体……" },
-    { src: "assets/scene54.jpg", target: { x: 0.096, y: 0.446, w: 0.108, h: 0.089 }, explanation: "そのメイド、何を入れている……？" },
-    { src: "assets/scene55.jpg", target: { x: 0.813, y: 0.258, w: 0.103, h: 0.086 }, explanation: "誰かが見ている……" },
-    { src: "assets/scene56.jpg", target: { x: 0.761, y: 0.417, w: 0.139, h: 0.062 }, explanation: "布団の陰から何者かの手が……\n生者なのか、死者なのか……" },
-    { src: "assets/scene57.jpg", target: { x: 0.762, y: 0.182, w: 0.089, h: 0.092 }, explanation: "書棚の陰に……" },
-    { src: "assets/scene58.jpg", target: { x: 0.442, y: 0.081, w: 0.126, h: 0.064 }, explanation: "花火の中に目のようなものが……" },
-    { src: "assets/scene59.jpg", target: { x: 0.520, y: 0.352, w: 0.134, h: 0.059 }, explanation: "それは新種のリンゴ……\nではないようだ" },
-    { src: "assets/scene60.jpg", target: { x: 0.710, y: 0.409, w: 0.138, h: 0.050 }, explanation: "的の後に誰かが立っているようだが……" },
-    { src: "assets/scene61.jpg", target: { x: 0.450, y: 0.546, w: 0.119, h: 0.056 }, explanation: "おい！\nちゃんと彫ってるんだろうな！？" },
-    { src: "assets/scene62.jpg", target: { x: 0.686, y: 0.520, w: 0.144, h: 0.043 }, explanation: "最近この辺りで下着泥棒が出没しているらしい" },
-    { src: "assets/scene63.jpg", target: { x: 0.705, y: 0.288, w: 0.081, h: 0.076 }, explanation: "トイレには誰かが潜んでいる" },
-    { src: "assets/scene64.jpg", target: { x: 0.328, y: 0.194, w: 0.108, h: 0.056 }, explanation: "サメが咥えている物は……？" },
-    { src: "assets/scene65.jpg", target: { x: 0.295, y: 0.470, w: 0.123, h: 0.048 }, explanation: "その魚だけ本物ではないようだ" },
-    { src: "assets/scene66.jpg", target: { x: 0.791, y: 0.132, w: 0.095, h: 0.055 }, explanation: "その手は……？" },
-    { src: "assets/scene67_v37.jpg", target: { x: 0.118, y: 0.318, w: 0.083, h: 0.047 }, explanation: "お洒落な鳩だ" },
-    { src: "assets/scene68.jpg", target: { x: 0.000, y: 0.630, w: 0.086, h: 0.042 }, explanation: "車を搬入した際に轢かれた者がいるようだ……" },
-    { src: "assets/scene69.jpg", target: { x: 0.738, y: 0.237, w: 0.063, h: 0.035 }, explanation: "こんにちは！！" },
-  ];
+  {
+    "src": "assets/scene1.jpg",
+    "explanation": "お巡りさんこっちです！\n変な制服を着たお巡りさんが……！！",
+    "target": {
+      "x": 0.685,
+      "y": 0.411,
+      "w": 0.309,
+      "h": 0.381
+    }
+  },
+  {
+    "src": "assets/scene2.jpg",
+    "explanation": "壁に移る影がおかしい\n影ではない何かだろうか……",
+    "targets": [
+      {
+        "x": 0.1,
+        "y": 0.301,
+        "w": 0.342,
+        "h": 0.406,
+        "shape": "ellipse",
+        "angle": -5
+      }
+    ]
+  },
+  {
+    "src": "assets/scene3.jpg",
+    "explanation": "彼女、汗をかき過ぎなのでは……？",
+    "targets": [
+      {
+        "x": 0.286,
+        "y": 0.567,
+        "w": 0.404,
+        "h": 0.318,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene4.jpg",
+    "explanation": "この公園には、古代の巨大生物が生息しているようだ……",
+    "targets": [
+      {
+        "x": 0.279,
+        "y": 0.755,
+        "w": 0.496,
+        "h": 0.184,
+        "angle": 15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene5.jpg",
+    "explanation": "この二人はこんな場所で何をしていたのだろうか……",
+    "target": {
+      "x": 0.763,
+      "y": 0.241,
+      "w": 0.197,
+      "h": 0.449
+    }
+  },
+  {
+    "src": "assets/scene6.jpg",
+    "explanation": "普通の歯科医院にこんな道具が置いてあるのだろうか……？",
+    "target": {
+      "x": 0.671,
+      "y": 0.055,
+      "w": 0.327,
+      "h": 0.212
+    }
+  },
+  {
+    "src": "assets/scene7.jpg",
+    "explanation": "「お腹減ったな……」\n彼女にはグローブが食べ物に見えているようだ",
+    "targets": [
+      {
+        "x": 0.131,
+        "y": 0.684,
+        "w": 0.22,
+        "h": 0.108,
+        "shape": "ellipse"
+      },
+      {
+        "x": 0.43,
+        "y": 0.74,
+        "w": 0.271,
+        "h": 0.204,
+        "shape": "ellipse",
+        "angle": 55
+      }
+    ]
+  },
+  {
+    "src": "assets/scene9.jpg",
+    "explanation": "このスーパーは品揃えがいいと評判だ",
+    "targets": [
+      {
+        "x": 0.542,
+        "y": 0.732,
+        "w": 0.307,
+        "h": 0.254,
+        "shape": "ellipse",
+        "angle": 45
+      }
+    ]
+  },
+  {
+    "src": "assets/scene8.jpg",
+    "explanation": "奇麗な星空をよく観察すると、人知を超えた何かが現れているかもしれない……",
+    "targets": [
+      {
+        "x": 0.385,
+        "y": 0.071,
+        "w": 0.259,
+        "h": 0.276,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene11.jpg",
+    "explanation": "その人はそんな巨大なナイフで何を食べるつもりだろうか……？",
+    "target": {
+      "x": 0.625,
+      "y": 0.149,
+      "w": 0.312,
+      "h": 0.16
+    }
+  },
+  {
+    "src": "assets/scene10.jpg",
+    "explanation": "クラーケン襲来！\n総員戦闘配置につけ！！",
+    "targets": [
+      {
+        "x": 0.522,
+        "y": 0.158,
+        "w": 0.328,
+        "h": 0.158,
+        "shape": "ellipse",
+        "angle": 20
+      }
+    ]
+  },
+  {
+    "src": "assets/scene12.jpg",
+    "explanation": "鏡の中の私……\n鏡写しになっていない……？",
+    "targets": [
+      {
+        "x": 0.825,
+        "y": 0.191,
+        "w": 0.17,
+        "h": 0.273,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene15.jpg",
+    "explanation": "その湖には古代生物の生き残りが潜んでいるという噂がある",
+    "target": {
+      "x": 0.318,
+      "y": 0.185,
+      "w": 0.557,
+      "h": 0.049
+    }
+  },
+  {
+    "src": "assets/scene16.jpg",
+    "explanation": "小人は7人のはずだが……\n1人多いようだ",
+    "targets": [
+      {
+        "x": 0.23,
+        "y": 0.472,
+        "w": 0.246,
+        "h": 0.167,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene39.jpg",
+    "explanation": "ネギの勇者",
+    "targets": [
+      {
+        "x": 0.572,
+        "y": 0.149,
+        "w": 0.126,
+        "h": 0.319,
+        "shape": "ellipse",
+        "angle": 25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene14.jpg",
+    "explanation": "トレーナーの首に異形の手が伸びているが……\n二人とも集中して気付いていないようだ",
+    "targets": [
+      {
+        "x": 0.488,
+        "y": 0.137,
+        "w": 0.344,
+        "h": 0.114,
+        "shape": "ellipse",
+        "angle": -25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene17.jpg",
+    "explanation": "その鶏肉も洗剤で洗ったの……？",
+    "targets": [
+      {
+        "x": 0.634,
+        "y": 0.679,
+        "w": 0.366,
+        "h": 0.106,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene19.jpg",
+    "explanation": "背中、背中……！！",
+    "targets": [
+      {
+        "x": 0.652,
+        "y": 0.135,
+        "w": 0.195,
+        "h": 0.193,
+        "shape": "ellipse",
+        "angle": 15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene13.jpg",
+    "explanation": "この女性は何者だろうか……？",
+    "targets": [
+      {
+        "x": 0.181,
+        "y": 0.566,
+        "w": 0.208,
+        "h": 0.176,
+        "shape": "ellipse",
+        "angle": -45
+      }
+    ]
+  },
+  {
+    "src": "assets/scene24.jpg",
+    "explanation": "現像中の写真に現像中の写真が……",
+    "targets": [
+      {
+        "x": 0.432,
+        "y": 0.701,
+        "w": 0.265,
+        "h": 0.107,
+        "angle": -20
+      }
+    ]
+  },
+  {
+    "src": "assets/scene20.jpg",
+    "explanation": "その猫は尻尾だけのように見えるが……",
+    "targets": [
+      {
+        "x": 0.005,
+        "y": 0.776,
+        "w": 0.295,
+        "h": 0.12,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene21.jpg",
+    "explanation": "不審な人影が見える……",
+    "target": {
+      "x": 0.096,
+      "y": 0.128,
+      "w": 0.098,
+      "h": 0.283
+    }
+  },
+  {
+    "src": "assets/scene23.jpg",
+    "explanation": "リンゴの中にボウリング球が混じっている……",
+    "targets": [
+      {
+        "x": 0.163,
+        "y": 0.614,
+        "w": 0.252,
+        "h": 0.135,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene25.jpg",
+    "explanation": "浦島太郎……？",
+    "targets": [
+      {
+        "x": 0.382,
+        "y": 0.567,
+        "w": 0.243,
+        "h": 0.132,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene18.jpg",
+    "explanation": "あのおばあちゃん、箸はいらないの……？",
+    "targets": [
+      {
+        "x": 0.709,
+        "y": 0.257,
+        "w": 0.21,
+        "h": 0.152,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene33.jpg",
+    "explanation": "環境問題",
+    "targets": [
+      {
+        "x": 0.704,
+        "y": 0.218,
+        "w": 0.179,
+        "h": 0.137,
+        "angle": 20
+      }
+    ]
+  },
+  {
+    "src": "assets/scene27.jpg",
+    "explanation": "カーテンの下から誰かの足が……",
+    "target": {
+      "x": 0.772,
+      "y": 0.821,
+      "w": 0.17,
+      "h": 0.128
+    }
+  },
+  {
+    "src": "assets/scene28.jpg",
+    "explanation": "ドーナツショップのショーケースだが……\nそれはドーナツではないようだ",
+    "targets": [
+      {
+        "x": 0.052,
+        "y": 0.523,
+        "w": 0.262,
+        "h": 0.084,
+        "shape": "ellipse",
+        "angle": 20
+      }
+    ]
+  },
+  {
+    "src": "assets/scene29.jpg",
+    "explanation": "それはパンじゃないよ！",
+    "targets": [
+      {
+        "x": 0.068,
+        "y": 0.137,
+        "w": 0.179,
+        "h": 0.151,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene30.jpg",
+    "explanation": "一緒に食べる……？",
+    "target": {
+      "x": 0.728,
+      "y": 0.104,
+      "w": 0.153,
+      "h": 0.138
+    }
+  },
+  {
+    "src": "assets/scene31.jpg",
+    "explanation": "最近はゴリラにも職業選択の自由が……？",
+    "targets": [
+      {
+        "x": 0.687,
+        "y": 0.258,
+        "w": 0.224,
+        "h": 0.118,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene32.jpg",
+    "explanation": "お主、本当に人間か……？",
+    "targets": [
+      {
+        "x": 0.072,
+        "y": 0.694,
+        "w": 0.19,
+        "h": 0.137,
+        "shape": "ellipse",
+        "angle": 10
+      },
+      {
+        "x": 0.331,
+        "y": 0.342,
+        "w": 0.064,
+        "h": 0.051,
+        "angle": 25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene34.jpg",
+    "explanation": "窓から誰かが覗いている……",
+    "target": {
+      "x": 0.004,
+      "y": 0.082,
+      "w": 0.124,
+      "h": 0.164
+    }
+  },
+  {
+    "src": "assets/scene35.jpg",
+    "explanation": "その男性はこの世の者ではなさそうだ……",
+    "target": {
+      "x": 0.825,
+      "y": 0.658,
+      "w": 0.172,
+      "h": 0.096
+    }
+  },
+  {
+    "src": "assets/scene36.jpg",
+    "explanation": "クローゼットの中に誰かが潜んでいる……",
+    "target": {
+      "x": 0.268,
+      "y": 0.611,
+      "w": 0.243,
+      "h": 0.081
+    }
+  },
+  {
+    "src": "assets/scene37.jpg",
+    "explanation": "蠅の王がいる",
+    "targets": [
+      {
+        "x": 0.67,
+        "y": 0.623,
+        "w": 0.221,
+        "h": 0.106,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene38.jpg",
+    "explanation": "置き配は便利だが、荷物が届いた直後には取りに行かない方が良さそうだ",
+    "target": {
+      "x": 0,
+      "y": 0.733,
+      "w": 0.149,
+      "h": 0.125
+    }
+  },
+  {
+    "src": "assets/scene22.jpg",
+    "explanation": "覗かれている……",
+    "targets": [
+      {
+        "x": 0.679,
+        "y": 0.32,
+        "w": 0.144,
+        "h": 0.152,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene26.jpg",
+    "explanation": "ホットドッグにおかしなものが挟まっている\n彼女が誤って食べないことを祈ろう",
+    "targets": [
+      {
+        "x": 0.421,
+        "y": 0.853,
+        "w": 0.361,
+        "h": 0.046,
+        "angle": -40
+      }
+    ]
+  },
+  {
+    "src": "assets/scene40.jpg",
+    "explanation": "そのボトルの中身は一体……？",
+    "target": {
+      "x": 0.754,
+      "y": 0.69,
+      "w": 0.128,
+      "h": 0.129
+    }
+  },
+  {
+    "src": "assets/scene41.jpg",
+    "explanation": "それは新種の鶏だろうか……",
+    "targets": [
+      {
+        "x": 0.798,
+        "y": 0.218,
+        "w": 0.132,
+        "h": 0.151,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene42.jpg",
+    "explanation": "公園には何が埋まっているか分からない",
+    "targets": [
+      {
+        "x": 0.784,
+        "y": 0.649,
+        "w": 0.142,
+        "h": 0.127,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene43.jpg",
+    "explanation": "この食肉加工場には色々な動物の肉が入荷する\n時々この世のものではない獣の肉も入荷するようだ",
+    "targets": [
+      {
+        "x": 0.791,
+        "y": 0.218,
+        "w": 0.151,
+        "h": 0.119,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene44.jpg",
+    "explanation": "4人でファミレスに来たのだが……\n店員には3人しか見えていないようだ",
+    "targets": [
+      {
+        "x": 0.306,
+        "y": 0.416,
+        "w": 0.203,
+        "h": 0.078,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene45.jpg",
+    "explanation": "冷蔵庫の陰から、誰かの手が伸びている……",
+    "targets": [
+      {
+        "x": 0.792,
+        "y": 0.382,
+        "w": 0.177,
+        "h": 0.089,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene46.jpg",
+    "explanation": "お盆の上に本物のウサギが一匹紛れ込んでいる……",
+    "targets": [
+      {
+        "x": 0.643,
+        "y": 0.371,
+        "w": 0.156,
+        "h": 0.1,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene47.jpg",
+    "explanation": "隣の人の絵に落書きをしてはいけません！",
+    "targets": [
+      {
+        "x": 0.269,
+        "y": 0.387,
+        "w": 0.187,
+        "h": 0.08,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene48.jpg",
+    "explanation": "それは誰の足なのか……",
+    "targets": [
+      {
+        "x": 0.298,
+        "y": 0.208,
+        "w": 0.131,
+        "h": 0.113,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene49.jpg",
+    "explanation": "車の下に何かがしがみついている",
+    "targets": [
+      {
+        "x": 0.663,
+        "y": 0.427,
+        "w": 0.188,
+        "h": 0.072,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene73.jpg",
+    "explanation": "この傘はどうやってさすのだろうか……？",
+    "target": {
+      "x": 0,
+      "y": 0.421,
+      "w": 0.089,
+      "h": 0.116
+    }
+  },
+  {
+    "src": "assets/scene50.jpg",
+    "explanation": "この公園には芸術的な街灯がある",
+    "targets": [
+      {
+        "x": 0.797,
+        "y": 0.01,
+        "w": 0.166,
+        "h": 0.076,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene51.jpg",
+    "explanation": "何者かが螺旋階段の上から見下ろしている……",
+    "targets": [
+      {
+        "x": 0.482,
+        "y": 0.174,
+        "w": 0.13,
+        "h": 0.09,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene52.jpg",
+    "explanation": "変わった形のハサミだ\nどうやって使うのだろうか……？",
+    "targets": [
+      {
+        "x": 0.46,
+        "y": 0.619,
+        "w": 0.204,
+        "h": 0.056,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene53.jpg",
+    "explanation": "誰かが見ている……",
+    "target": {
+      "x": 0.813,
+      "y": 0.258,
+      "w": 0.103,
+      "h": 0.086
+    }
+  },
+  {
+    "src": "assets/scene54.jpg",
+    "explanation": "電源プラグが抜けているが、画面に写っている映像は一体……",
+    "targets": [
+      {
+        "x": 0.727,
+        "y": 0.775,
+        "w": 0.159,
+        "h": 0.07,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene55.jpg",
+    "explanation": "そのメイド、何を入れている……？",
+    "targets": [
+      {
+        "x": 0.092,
+        "y": 0.444,
+        "w": 0.118,
+        "h": 0.094,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene56.jpg",
+    "explanation": "書棚の陰に……",
+    "targets": [
+      {
+        "x": 0.763,
+        "y": 0.169,
+        "w": 0.099,
+        "h": 0.112,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene57.jpg",
+    "explanation": "布団の陰から何者かの手が……",
+    "targets": [
+      {
+        "x": 0.745,
+        "y": 0.441,
+        "w": 0.161,
+        "h": 0.061,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene58.jpg",
+    "explanation": "おい！\nちゃんと彫ってるんだろうな！？",
+    "target": {
+      "x": 0.45,
+      "y": 0.546,
+      "w": 0.119,
+      "h": 0.056
+    }
+  },
+  {
+    "src": "assets/scene59.jpg",
+    "explanation": "サンドバッグに人の顔が浮かび上がっている……",
+    "targets": [
+      {
+        "x": 0.824,
+        "y": 0.236,
+        "w": 0.074,
+        "h": 0.11,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene60.jpg",
+    "explanation": "花火の中に目のようなものが……",
+    "targets": [
+      {
+        "x": 0.47,
+        "y": 0.096,
+        "w": 0.096,
+        "h": 0.039,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene64.jpg",
+    "explanation": "その注射器、何に使うつもりなのだろうか……",
+    "targets": [
+      {
+        "x": 0.812,
+        "y": 0.229,
+        "w": 0.059,
+        "h": 0.107,
+        "angle": 25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene61.jpg",
+    "explanation": "それは新種のリンゴ……\nではないようだ",
+    "targets": [
+      {
+        "x": 0.52,
+        "y": 0.354,
+        "w": 0.134,
+        "h": 0.059,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene62.jpg",
+    "explanation": "最近この辺りに下着泥棒が出没しているらしい",
+    "target": {
+      "x": 0.686,
+      "y": 0.52,
+      "w": 0.144,
+      "h": 0.043
+    }
+  },
+  {
+    "src": "assets/scene63.jpg",
+    "explanation": "その魚だけ本物ではないようだ",
+    "targets": [
+      {
+        "x": 0.286,
+        "y": 0.47,
+        "w": 0.133,
+        "h": 0.058,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene65.jpg",
+    "explanation": "的の後に誰かが立っているようだが……",
+    "target": {
+      "x": 0.732,
+      "y": 0.409,
+      "w": 0.108,
+      "h": 0.05
+    }
+  },
+  {
+    "src": "assets/scene74.jpg",
+    "explanation": "椅子の下から、不気味な顔が覗いている……",
+    "targets": [
+      {
+        "x": 0.77,
+        "y": 0.795,
+        "w": 0.105,
+        "h": 0.065,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene66.jpg",
+    "explanation": "トイレには誰かが潜んでいる",
+    "targets": [
+      {
+        "x": 0.705,
+        "y": 0.288,
+        "w": 0.081,
+        "h": 0.076,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene67.jpg",
+    "explanation": "ファンタジー世界に何故デジタル時計……？",
+    "targets": [
+      {
+        "x": 0.156,
+        "y": 0.678,
+        "w": 0.12,
+        "h": 0.039,
+        "angle": -15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene68.jpg",
+    "explanation": "サメが咥えている物は……？",
+    "targets": [
+      {
+        "x": 0.333,
+        "y": 0.205,
+        "w": 0.108,
+        "h": 0.046,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene75.png",
+    "explanation": "そんな装備でちゃんと泳げるの……？",
+    "targets": [
+      {
+        "x": 0.327,
+        "y": 0.331,
+        "w": 0.137,
+        "h": 0.035,
+        "shape": "ellipse",
+        "angle": -10
+      }
+    ]
+  },
+  {
+    "src": "assets/scene69.jpg",
+    "explanation": "その手は一体……？",
+    "targets": [
+      {
+        "x": 0.791,
+        "y": 0.138,
+        "w": 0.095,
+        "h": 0.045,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene70.jpg",
+    "explanation": "車を搬入した際に轢かれた者がいるようだ……",
+    "targets": [
+      {
+        "x": 0.005,
+        "y": 0.63,
+        "w": 0.086,
+        "h": 0.042,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene71.jpg",
+    "explanation": "お洒落な鳩だ",
+    "targets": [
+      {
+        "x": 0.123,
+        "y": 0.317,
+        "w": 0.083,
+        "h": 0.042,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene72.jpg",
+    "explanation": "こんにちは！！",
+    "targets": [
+      {
+        "x": 0.734,
+        "y": 0.237,
+        "w": 0.073,
+        "h": 0.035,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene76.png",
+    "explanation": "可愛くないぬいぐるみだ",
+    "targets": [
+      {
+        "x": 0.075,
+        "y": 0.589,
+        "w": 0.265,
+        "h": 0.164,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene77.png",
+    "explanation": "ここを何階だと思っているのか……",
+    "targets": [
+      {
+        "x": 0.817,
+        "y": 0.06,
+        "w": 0.08,
+        "h": 0.093,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene78.png",
+    "explanation": "扉の隙間から覗く目は……？",
+    "targets": [
+      {
+        "x": 0.945,
+        "y": 0.276,
+        "w": 0.047,
+        "h": 0.027,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene79.png",
+    "explanation": "元気に走ってくる少女\n随分顔色が悪いようだが……",
+    "targets": [
+      {
+        "x": 0.772,
+        "y": 0.294,
+        "w": 0.117,
+        "h": 0.145,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene80.png",
+    "explanation": "車窓に映る人影は……？",
+    "targets": [
+      {
+        "x": 0.837,
+        "y": 0.09,
+        "w": 0.16,
+        "h": 0.209,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene81.png",
+    "explanation": "最新型のロボットアームはとてもリアルに出来ている",
+    "targets": [
+      {
+        "x": 0.514,
+        "y": 0.099,
+        "w": 0.092,
+        "h": 0.089,
+        "shape": "ellipse",
+        "angle": 10
+      }
+    ]
+  },
+  {
+    "src": "assets/scene82.png",
+    "explanation": "郵便受けから誰かが覗いている……",
+    "target": {
+      "x": 0.663,
+      "y": 0.246,
+      "w": 0.136,
+      "h": 0.024
+    }
+  },
+  {
+    "src": "assets/scene83.png",
+    "explanation": "羊の群れにパンダが紛れ込んでいる",
+    "targets": [
+      {
+        "x": 0.706,
+        "y": 0.206,
+        "w": 0.286,
+        "h": 0.142,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene84.png",
+    "explanation": "涼むために手にしているのは、うちわではなくノコギリ……！",
+    "targets": [
+      {
+        "x": 0.673,
+        "y": 0.327,
+        "w": 0.11,
+        "h": 0.166,
+        "angle": -20
+      }
+    ]
+  },
+  {
+    "src": "assets/scene85.png",
+    "explanation": "それはボトルではなくキャップなのでは……？",
+    "targets": [
+      {
+        "x": 0.756,
+        "y": 0.263,
+        "w": 0.074,
+        "h": 0.033,
+        "shape": "ellipse",
+        "angle": -15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene86.png",
+    "explanation": "その入れ歯は誰の物なのだろうか……",
+    "targets": [
+      {
+        "x": 0.516,
+        "y": 0.868,
+        "w": 0.127,
+        "h": 0.065,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene87.png",
+    "explanation": "早く助けを……！！",
+    "targets": [
+      {
+        "x": 0.37,
+        "y": 0.008,
+        "w": 0.205,
+        "h": 0.172,
+        "shape": "ellipse",
+        "angle": 5
+      }
+    ]
+  },
+  {
+    "src": "assets/scene88.png",
+    "explanation": "その水は海の味がしそうだ",
+    "targets": [
+      {
+        "x": 0.26,
+        "y": 0.568,
+        "w": 0.151,
+        "h": 0.086,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene89.png",
+    "explanation": "そこには何が埋められているのだろうか……",
+    "targets": [
+      {
+        "x": 0.67,
+        "y": 0.469,
+        "w": 0.186,
+        "h": 0.224,
+        "angle": -50
+      }
+    ]
+  },
+  {
+    "src": "assets/scene90.png",
+    "explanation": "「今日はやけにお客様の視線を感じるわ……」\nまあ、そんな恰好をしていればねぇ……",
+    "targets": [
+      {
+        "x": 0.418,
+        "y": 0.794,
+        "w": 0.137,
+        "h": 0.133,
+        "angle": 10
+      }
+    ]
+  },
+  {
+    "src": "assets/scene91.png",
+    "explanation": "まるで生き物のように動くリボン\n……本物の生き物だった",
+    "targets": [
+      {
+        "x": 0.779,
+        "y": 0.231,
+        "w": 0.139,
+        "h": 0.056,
+        "shape": "ellipse",
+        "angle": 10
+      }
+    ]
+  },
+  {
+    "src": "assets/scene92.png",
+    "explanation": "部屋の奥に人影が……",
+    "targets": [
+      {
+        "x": 0.727,
+        "y": 0.003,
+        "w": 0.155,
+        "h": 0.197,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene93.png",
+    "explanation": "階段に妙な物質が付着している……",
+    "target": {
+      "x": 0.285,
+      "y": 0.688,
+      "w": 0.715,
+      "h": 0.106
+    }
+  },
+  {
+    "src": "assets/scene94.png",
+    "explanation": "それ、ズルくない……？",
+    "targets": [
+      {
+        "x": 0.643,
+        "y": 0.529,
+        "w": 0.15,
+        "h": 0.12,
+        "angle": 5
+      }
+    ]
+  },
+  {
+    "src": "assets/scene95.png",
+    "explanation": "息ピッタリ！！",
+    "targets": [
+      {
+        "x": 0.716,
+        "y": 0.287,
+        "w": 0.282,
+        "h": 0.294,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene96.png",
+    "explanation": "おかしな物がパスタの上に……",
+    "targets": [
+      {
+        "x": 0.69,
+        "y": 0.687,
+        "w": 0.077,
+        "h": 0.052,
+        "shape": "ellipse",
+        "angle": 30
+      }
+    ]
+  },
+  {
+    "src": "assets/scene97.png",
+    "explanation": "窓の外にいる者は……",
+    "targets": [
+      {
+        "x": 0.883,
+        "y": 0.19,
+        "w": 0.113,
+        "h": 0.094,
+        "shape": "ellipse"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene98.png",
+    "explanation": "この回廊自体が違和感だが、その栓を開けると何が起こるのだろうか……？",
+    "targets": [
+      {
+        "x": 0.06,
+        "y": 0.665,
+        "w": 0.125,
+        "h": 0.074,
+        "shape": "ellipse",
+        "angle": -10
+      }
+    ]
+  },
+  {
+    "src": "assets/scene99.png",
+    "explanation": "奥にいる女性は人間ではないようだ……",
+    "targets": [
+      {
+        "x": 0.281,
+        "y": 0.067,
+        "w": 0.242,
+        "h": 0.179,
+        "shape": "ellipse"
+      }
+    ]
+  }
+];
+  const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.jpg","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
 
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
@@ -139,7 +1332,12 @@
   const editorShell = $('editorShell');
   const editorImage = $('editorImage');
   const editorOverlay = $('editorOverlay');
-  const editRect = $('editRect');
+  const editShape1 = $('editShape1');
+  const editShape2 = $('editShape2');
+  const hitboxSlot1Button = $('hitboxSlot1Button');
+  const hitboxSlot2Button = $('hitboxSlot2Button');
+  const addSecondHitboxButton = $('addSecondHitboxButton');
+  const removeHitboxButton = $('removeHitboxButton');
   const editorLoading = $('editorLoading');
   const editorValues = $('editorValues');
   const editorResetButton = $('editorResetButton');
@@ -168,9 +1366,14 @@
   let bgmTrackIndex = 0;
   let bgmFadeTimer = null;
   let answerOpen = false;
-  let stageSelectUnlocked = false;
+  let stageSelectUnlocked = true;
+  const clearedStageIds = new Set();
+  const reachedStageIds = new Set();
+  let pendingResultTimer = null;
+  let matchedHitboxIndex = 0;
 
   let editStageIndex = 0;
+  let editHitboxIndex = 0;
   let editorDrawing = false;
   let drawStart = null;
 
@@ -185,12 +1388,17 @@
     return Math.round(value * 1000) / 1000;
   }
 
-  function normalizeTarget(target) {
+  function normalizeTarget(target = {}) {
+    const legacyShape = String(target.shape || '').toLowerCase();
+    let shape = 'rect';
+    if (legacyShape === 'ellipse' || legacyShape === 'circle') shape = 'ellipse';
     const t = {
-      x: clamp(target.x, 0, 1),
-      y: clamp(target.y, 0, 1),
-      w: clamp(target.w, MIN_SIZE, 1),
-      h: clamp(target.h, MIN_SIZE, 1)
+      x: clamp(Number(target.x) || 0, 0, 1),
+      y: clamp(Number(target.y) || 0, 0, 1),
+      w: clamp(Number(target.w) || MIN_SIZE, MIN_SIZE, 1),
+      h: clamp(Number(target.h) || MIN_SIZE, MIN_SIZE, 1),
+      shape,
+      angle: Number.isFinite(Number(target.angle)) ? Number(target.angle) : 0
     };
     if (t.x + t.w > 1) t.x = 1 - t.w;
     if (t.y + t.h > 1) t.y = 1 - t.h;
@@ -198,84 +1406,202 @@
     t.y = clamp(t.y, 0, 1 - MIN_SIZE);
     t.w = clamp(t.w, MIN_SIZE, 1 - t.x);
     t.h = clamp(t.h, MIN_SIZE, 1 - t.y);
+    while (t.angle > 180) t.angle -= 360;
+    while (t.angle < -180) t.angle += 360;
     return {
       x: round3(t.x),
       y: round3(t.y),
       w: round3(t.w),
-      h: round3(t.h)
+      h: round3(t.h),
+      shape: t.shape,
+      angle: round3(t.angle)
     };
   }
 
-  function loadCustomTargets() {
+  function getStageTargets(stage) {
+    const source = Array.isArray(stage.targets) && stage.targets.length
+      ? stage.targets
+      : (stage.target ? [stage.target] : []);
+    const targets = source.slice(0, 2).map((target) => normalizeTarget(target));
+    if (!targets.length) targets.push(normalizeTarget({ x: 0.4, y: 0.4, w: 0.2, h: 0.2, shape: 'rect', angle: 0 }));
+    stage.targets = targets;
+    stage.target = targets[0];
+    return targets;
+  }
+
+  function setStageTargets(stage, targets) {
+    const normalized = (Array.isArray(targets) ? targets : [targets])
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((target) => normalizeTarget(target));
+    stage.targets = normalized.length ? normalized : [normalizeTarget({ x: 0.4, y: 0.4, w: 0.2, h: 0.2, shape: 'rect', angle: 0 })];
+    stage.target = stage.targets[0];
+    return stage.targets;
+  }
+
+  function shapeLabel(shape) {
+    if (shape === 'ellipse' || shape === 'circle') return '楕円形';
+    return '四角形';
+  }
+
+  function rotatePoint(px, py, cx, cy, angleDeg) {
+    const rad = (angleDeg * Math.PI) / 180;
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const dx = px - cx;
+    const dy = py - cy;
+    return {
+      x: (dx * cos) + (dy * sin),
+      y: (-dx * sin) + (dy * cos)
+    };
+  }
+
+  function targetContainsPoint(target, px, py) {
+    const t = normalizeTarget(target);
+    const cx = t.x + (t.w / 2);
+    const cy = t.y + (t.h / 2);
+    // CSS rotates in physical pixels, not in the non-square normalized plane.
+    const rect = sceneImage.getBoundingClientRect();
+    const aspect = rect.height > 0 ? rect.width / rect.height : 1;
+    const local = rotatePoint(px * aspect, py, cx * aspect, cy, t.angle || 0);
+    const halfW = t.w * aspect / 2;
+    const halfH = t.h / 2;
+    if (Math.abs(local.x) > halfW || Math.abs(local.y) > halfH) return false;
+    if (t.shape === 'ellipse') {
+      const dx = local.x / halfW;
+      const dy = local.y / halfH;
+      return (dx * dx) + (dy * dy) <= 1;
+    }
+    return true;
+  }
+
+  defaultStages.forEach((stage) => setStageTargets(stage, stage.targets || stage.target));
+  stages.forEach((stage) => setStageTargets(stage, stage.targets || stage.target));
+
+  function getStoredValue(primaryKey, legacyKeys = []) {
+    const direct = localStorage.getItem(primaryKey);
+    if (direct) return direct;
+    for (const key of legacyKeys) {
+      const value = localStorage.getItem(key);
+      if (value) return value;
+    }
+    return null;
+  }
+
+  function saveValue(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); }
+    catch (error) { showToast('保存できませんでした。ブラウザの保存設定をご確認ください', 'ng'); }
+  }
+
+  function loadStageOverrides(key, legacyKeys, apply) {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = getStoredValue(key, legacyKeys);
       if (!raw) return;
       const saved = JSON.parse(raw);
-      if (!Array.isArray(saved)) return;
-      saved.forEach((target, index) => {
-        if (!stages[index] || !target) return;
-        stages[index].target = normalizeTarget(target);
-      });
-    } catch (error) {
-      console.warn('custom target load failed', error);
-    }
+      const entries = Array.isArray(saved)
+        ? saved.map((value, index) => [legacyStageSources[index], value])
+        : Object.entries(saved || {});
+      for (const [src, value] of entries) {
+        const stage = stages.find(stage => stage.src === src);
+        if (stage && value != null) apply(stage, value);
+      }
+    } catch (error) { console.warn('stage overrides load failed', error); }
+  }
+
+  function loadCustomTargets() {
+    loadStageOverrides(STORAGE_KEY, LEGACY_TARGET_STORAGE_KEYS, (stage, value) =>
+      setStageTargets(stage, Array.isArray(value) ? value : [value]));
   }
 
   function saveCustomTargets() {
-    const payload = stages.map((stage) => normalizeTarget(stage.target));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    saveValue(STORAGE_KEY, Object.fromEntries(stages.map(stage => [stage.src, getStageTargets(stage)])));
   }
 
-
   function loadCustomExplanations() {
-    try {
-      const raw = localStorage.getItem(EXPLANATION_STORAGE_KEY);
-      if (!raw) return;
-      const saved = JSON.parse(raw);
-      if (!Array.isArray(saved)) return;
-      saved.forEach((text, index) => {
-        if (!stages[index] || typeof text !== 'string') return;
-        stages[index].explanation = text;
-      });
-    } catch (error) {
-      console.warn('custom explanation load failed', error);
-    }
+    loadStageOverrides(EXPLANATION_STORAGE_KEY, LEGACY_EXPLANATION_STORAGE_KEYS, (stage, value) => {
+      if (typeof value === 'string') stage.explanation = value;
+    });
   }
 
   function saveCustomExplanations() {
-    const payload = stages.map((stage) => stage.explanation || '');
-    localStorage.setItem(EXPLANATION_STORAGE_KEY, JSON.stringify(payload));
+    saveValue(EXPLANATION_STORAGE_KEY, Object.fromEntries(stages.map(stage => [stage.src, stage.explanation || ''])));
+  }
+
+  function stageArea(stage) {
+    return getStageTargets(stage).reduce((sum, t) =>
+      sum + t.w * t.h * (t.shape === 'ellipse' ? Math.PI / 4 : 1), 0);
+  }
+
+  function sortStagesByArea() {
+    const playingSrc = stages[stageIndex]?.src;
+    const editingSrc = stages[editStageIndex]?.src;
+    stages.sort((a, b) => stageArea(b) - stageArea(a) ||
+      defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
+    stageIndex = Math.max(0, stages.findIndex(stage => stage.src === playingSrc));
+    editStageIndex = Math.max(0, stages.findIndex(stage => stage.src === editingSrc));
+    reachedStageIds.add(stages[0].src);
   }
 
   function loadStageSelectUnlock() {
-    try {
-      stageSelectUnlocked = localStorage.getItem(STAGE_SELECT_UNLOCK_KEY) === '1' ||
-        localStorage.getItem(PREVIOUS_STAGE_SELECT_UNLOCK_KEY) === '1';
-      if (stageSelectUnlocked) localStorage.setItem(STAGE_SELECT_UNLOCK_KEY, '1');
-    } catch (error) {
-      stageSelectUnlocked = false;
-    }
+    stageSelectUnlocked = true;
     updateStageSelectAvailability();
   }
 
   function unlockStageSelect() {
-    if (stageSelectUnlocked) return false;
     stageSelectUnlocked = true;
-    try {
-      localStorage.setItem(STAGE_SELECT_UNLOCK_KEY, '1');
-    } catch (error) {
-      console.warn('stage select unlock save failed', error);
-    }
     updateStageSelectAvailability();
-    return true;
+    return false;
+  }
+
+  function loadStageProgress() {
+    try {
+      const raw = localStorage.getItem(CLEARED_PROGRESS_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        for (const src of saved.cleared || []) if (stages.some(s => s.src === src)) clearedStageIds.add(src);
+        for (const src of saved.reached || []) if (stages.some(s => s.src === src)) reachedStageIds.add(src);
+      } else {
+        const legacyRaw = localStorage.getItem('iwakan_cleared_progress_v46_75stages_sorted');
+        const last = Number.parseInt(legacyRaw ?? '-1', 10);
+        legacyStageSources.forEach((src, index) => {
+          if (index <= last) clearedStageIds.add(src);
+          if (legacyRaw !== null && index <= last + 1) reachedStageIds.add(src);
+        });
+      }
+    } catch (error) { console.warn('progress load failed', error); }
+    reachedStageIds.add(stages[0].src);
+    for (const src of clearedStageIds) reachedStageIds.add(src);
+    saveStageProgress();
+  }
+
+  function saveStageProgress() {
+    saveValue(CLEARED_PROGRESS_KEY, { cleared: [...clearedStageIds], reached: [...reachedStageIds] });
+  }
+
+  function markStageCleared(index) {
+    const src = stages[index].src;
+    const isNew = !clearedStageIds.has(src);
+    clearedStageIds.add(src);
+    reachedStageIds.add(src);
+    if (stages[index + 1]) reachedStageIds.add(stages[index + 1].src);
+    saveStageProgress();
+    buildStageSelect();
+    return isNew;
   }
 
   function updateStageSelectAvailability() {
-    if (stageSelectButton) stageSelectButton.classList.toggle('hidden', !stageSelectUnlocked);
-    if (resultStageSelectButton) resultStageSelectButton.classList.toggle('hidden', !stageSelectUnlocked);
+    if (stageSelectButton) stageSelectButton.classList.remove('hidden');
+    if (resultStageSelectButton) resultStageSelectButton.classList.remove('hidden');
   }
 
   function setView(view) {
+    clearTimeout(pendingResultTimer);
+    if (view !== 'game') hideAnswerOverlay();
+    if (view === 'start' || view === 'select') {
+      sortStagesByArea();
+      saveStageProgress();
+      buildStageSelect();
+    }
     startPanel.classList.toggle('hidden', view !== 'start');
     stageSelectPanel.classList.toggle('hidden', view !== 'select');
     gamePanel.classList.toggle('hidden', view !== 'game');
@@ -511,6 +1837,9 @@
     marker.style.left = `${xPercent * 100}%`;
     marker.style.top = `${yPercent * 100}%`;
     markerLayer.appendChild(marker);
+    if (!correct) {
+      setTimeout(() => marker.remove(), 1000);
+    }
   }
 
   function hideAnswerOverlay() {
@@ -526,6 +1855,7 @@
   function loadStage() {
     solved = false;
     stageMisses = 0;
+    matchedHitboxIndex = 0;
     hideAnswerOverlay();
     markerLayer.innerHTML = '';
     loading.textContent = 'LOADING...';
@@ -533,6 +1863,7 @@
     updateHud();
 
     const stage = stages[stageIndex];
+    if (playMode !== 'test') { reachedStageIds.add(stage.src); saveStageProgress(); }
     sceneImage.onload = () => loading.classList.add('hidden');
     sceneImage.onerror = () => { loading.textContent = '画像を読み込めませんでした'; };
     sceneImage.src = stage.src;
@@ -542,10 +1873,14 @@
     stageGrid.innerHTML = '';
     stages.forEach((stage, index) => {
       const button = document.createElement('button');
+      const cleared = clearedStageIds.has(stage.src);
+      const available = cleared || reachedStageIds.has(stage.src);
       button.type = 'button';
-      button.className = 'stage-card';
-      button.innerHTML = `<img class="stage-thumb" src="${stage.src}" alt="ステージ${index + 1}"><strong>STAGE ${index + 1}</strong>`;
-      button.addEventListener('click', () => startSingleStage(index));
+      button.className = `stage-card${cleared ? ' cleared' : (available ? '' : ' locked')}`;
+      button.disabled = !available;
+      button.setAttribute('aria-disabled', available ? 'false' : 'true');
+      button.innerHTML = `<img class="stage-thumb" src="${stage.src}" alt="ステージ${index + 1}"><strong>STAGE ${index + 1}${cleared ? ' ✓' : (available ? '' : ' 🔒')}</strong>`;
+      if (available) button.addEventListener('click', () => startSelectedStage(index));
       stageGrid.appendChild(button);
     });
   }
@@ -556,26 +1891,23 @@
     if (clear) playClearSound();
     else playGameOverSound();
 
-    const newlyUnlockedStageSelect = clear && playMode === 'campaign' ? unlockStageSelect() : false;
+    unlockStageSelect();
     setView('result');
     updateStageSelectAvailability();
-    const cleared = playMode === 'single' ? (clear ? 1 : 0) : (clear ? stages.length : stageIndex);
-    const total = playMode === 'single' ? 1 : stages.length;
+    const cleared = clearedStageIds.size;
+    const total = stages.length;
     clearCount.textContent = `${cleared} / ${total}`;
     missCount.textContent = `${totalMisses}`;
 
     if (clear) {
       resultSymbol.innerHTML = `<img src="${CORRECT_ICON_SRC}" alt="正解">`;
-      resultTitle.textContent = playMode === 'single' ? 'STAGE CLEAR!' : 'GAME CLEAR!';
-      if (playMode === 'single') {
+      resultTitle.textContent = playMode === 'test' ? 'STAGE CLEAR!' : 'GAME CLEAR!';
+      if (playMode === 'test') {
         resultMessage.textContent = `ステージ ${stageIndex + 1} の違和感を見つけました。`;
       } else {
         resultMessage.textContent = totalMisses === 0
           ? 'ノーミスクリア！ すべての違和感を見抜きました。'
           : 'すべての違和感を見つけました。';
-        if (newlyUnlockedStageSelect) {
-          resultMessage.textContent += ' ステージ選択が解放されました。';
-        }
       }
     } else {
       resultSymbol.innerHTML = `<img src="${WRONG_ICON_SRC}" alt="不正解">`;
@@ -598,11 +1930,25 @@
     loadStage();
   }
 
-  function startSingleStage(index) {
-    if (!stageSelectUnlocked && editorPanel.classList.contains('hidden')) return;
+  function startSelectedStage(index) {
+    if (!stages[index] || !(reachedStageIds.has(stages[index].src) || clearedStageIds.has(stages[index].src))) return;
     ensureAudio();
     startBgm();
-    playMode = 'single';
+    playMode = 'selection';
+    stageIndex = index;
+    stageMisses = 0;
+    totalMisses = 0;
+    solved = false;
+    toast.classList.add('hidden');
+    hideAnswerOverlay();
+    setView('game');
+    loadStage();
+  }
+
+  function startTestStage(index) {
+    ensureAudio();
+    startBgm();
+    playMode = 'test';
     stageIndex = index;
     stageMisses = 0;
     totalMisses = 0;
@@ -619,7 +1965,8 @@
     const naturalHeight = img.naturalHeight || 0;
     if (!answerPreview || !answerPreview.getContext || !naturalWidth || !naturalHeight) return;
 
-    const t = normalizeTarget(stage.target);
+    const targets = getStageTargets(stage);
+    const t = normalizeTarget(targets[clamp(matchedHitboxIndex, 0, targets.length - 1)] || targets[0]);
     const centerX = (t.x + (t.w / 2)) * naturalWidth;
     const centerY = (t.y + (t.h / 2)) * naturalHeight;
     const targetPixelW = t.w * naturalWidth;
@@ -647,7 +1994,7 @@
     answerOpen = true;
     answerStageLabel.textContent = `STAGE ${stageIndex + 1}`;
     answerText.textContent = stage.explanation || 'ここが違和感です。';
-    answerNextButton.textContent = playMode === 'single'
+    answerNextButton.textContent = playMode === 'test'
       ? '結果画面へ'
       : (stageIndex >= stages.length - 1 ? '結果画面へ' : '次のステージへ');
 
@@ -665,7 +2012,7 @@
     if (!answerOpen) return;
     hideAnswerOverlay();
 
-    if (playMode === 'single') {
+    if (playMode === 'test') {
       finishGame(true);
       return;
     }
@@ -690,14 +2037,17 @@
     const py = (event.clientY - rect.top) / rect.height;
     if (px < 0 || px > 1 || py < 0 || py > 1) return;
 
-    const t = stages[stageIndex].target;
-    const correct = px >= t.x && px <= t.x + t.w && py >= t.y && py <= t.y + t.h;
+    const targets = getStageTargets(stages[stageIndex]);
+    const hitIndex = targets.findIndex((target) => targetContainsPoint(target, px, py));
+    const correct = hitIndex >= 0;
     addMarker(px, py, correct);
 
     if (correct) {
+      matchedHitboxIndex = hitIndex;
       solved = true;
+      if (playMode !== 'test') markStageCleared(stageIndex);
       playCorrectSound();
-      setTimeout(showAnswerDetail, 360);
+      pendingResultTimer = setTimeout(showAnswerDetail, 360);
       return;
     }
 
@@ -707,27 +2057,73 @@
 
     if (stageMisses >= 3) {
       solved = true;
-      setTimeout(() => finishGame(false), 760);
+      pendingResultTimer = setTimeout(() => finishGame(false), 760);
     }
   }
 
-  function formatTarget(target) {
+  function formatTarget(target, index = 0) {
     const t = normalizeTarget(target);
-    return `x: ${t.x.toFixed(3)} / y: ${t.y.toFixed(3)} / w: ${t.w.toFixed(3)} / h: ${t.h.toFixed(3)}`;
+    const angleText = ` / 角度: ${t.angle.toFixed(1)}°`;
+    return `判定${index + 1}・${shapeLabel(t.shape)} / x: ${t.x.toFixed(3)} / y: ${t.y.toFixed(3)} / w: ${t.w.toFixed(3)} / h: ${t.h.toFixed(3)}${angleText}`;
+  }
+
+  function rotationCss(angle) {
+    return `rotate(${(Number(angle) || 0).toFixed(3)}deg)`;
+  }
+
+  function styleEditorShape(element, target, selected) {
+    if (!element) return;
+    if (!target) {
+      element.classList.add('hidden');
+      return;
+    }
+    const t = normalizeTarget(target);
+    element.classList.remove('hidden', 'shape-rect', 'shape-ellipse', 'shape-circle', 'selected');
+    element.classList.add(`shape-${t.shape}`);
+    if (selected) element.classList.add('selected');
+    element.style.left = `${t.x * 100}%`;
+    element.style.top = `${t.y * 100}%`;
+    element.style.width = `${t.w * 100}%`;
+    element.style.height = `${t.h * 100}%`;
+    element.style.clipPath = 'none';
+    element.style.transform = rotationCss(t.angle);
+  }
+
+  function updateEditorShapeButtons(targets) {
+    const count = targets.length;
+    if (editHitboxIndex >= count) editHitboxIndex = count - 1;
+    if (editHitboxIndex < 0) editHitboxIndex = 0;
+    if (hitboxSlot1Button) hitboxSlot1Button.classList.toggle('active', editHitboxIndex === 0);
+    if (hitboxSlot2Button) {
+      hitboxSlot2Button.classList.toggle('active', editHitboxIndex === 1);
+      hitboxSlot2Button.disabled = count < 2;
+    }
+    if (addSecondHitboxButton) addSecondHitboxButton.disabled = count >= 2;
+    if (removeHitboxButton) removeHitboxButton.disabled = count <= 1;
+
+    const activeTarget = targets[editHitboxIndex];
+    document.querySelectorAll('[data-shape]').forEach((button) => {
+      const currentShape = activeTarget.shape === 'circle' ? 'ellipse' : activeTarget.shape;
+      button.classList.toggle('active', button.dataset.shape === currentShape);
+    });
   }
 
   function updateEditorRect() {
-    const t = normalizeTarget(stages[editStageIndex].target);
-    stages[editStageIndex].target = t;
-    editRect.style.left = `${t.x * 100}%`;
-    editRect.style.top = `${t.y * 100}%`;
-    editRect.style.width = `${t.w * 100}%`;
-    editRect.style.height = `${t.h * 100}%`;
-    editorValues.textContent = formatTarget(t);
+    const stage = stages[editStageIndex];
+    const targets = getStageTargets(stage);
+    setStageTargets(stage, targets);
+    styleEditorShape(editShape1, targets[0], editHitboxIndex === 0);
+    styleEditorShape(editShape2, targets[1], editHitboxIndex === 1);
+    updateEditorShapeButtons(targets);
+    editorValues.textContent = formatTarget(targets[editHitboxIndex], editHitboxIndex);
+    document.querySelectorAll('[data-target-field]').forEach(input => {
+      input.value = targets[editHitboxIndex][input.dataset.targetField];
+    });
     editorStageLabel.textContent = `STAGE ${editStageIndex + 1} / ${stages.length}`;
   }
 
   function loadEditorStage() {
+    editHitboxIndex = 0;
     editorLoading.textContent = 'LOADING...';
     editorLoading.classList.remove('hidden');
     editorImage.onload = () => {
@@ -744,6 +2140,7 @@
 
   function openEditor(index = 0) {
     editStageIndex = clamp(index, 0, stages.length - 1);
+    editHitboxIndex = 0;
     setView('editor');
     loadEditorStage();
   }
@@ -757,14 +2154,27 @@
     return { x, y };
   }
 
+  function activeEditorTarget() {
+    const targets = getStageTargets(stages[editStageIndex]);
+    editHitboxIndex = clamp(editHitboxIndex, 0, targets.length - 1);
+    return targets[editHitboxIndex];
+  }
+
+  function setActiveEditorTarget(target) {
+    const stage = stages[editStageIndex];
+    const targets = getStageTargets(stage).slice();
+    targets[editHitboxIndex] = normalizeTarget(target);
+    setStageTargets(stage, targets);
+  }
+
   function beginDraw(event) {
     if (!editorLoading.classList.contains('hidden')) return;
     const point = pointToNormalized(event, editorOverlay);
     if (!point) return;
     editorDrawing = true;
     drawStart = point;
-    const target = { x: point.x, y: point.y, w: MIN_SIZE, h: MIN_SIZE };
-    stages[editStageIndex].target = normalizeTarget(target);
+    const current = activeEditorTarget();
+    setActiveEditorTarget({ x: point.x, y: point.y, w: MIN_SIZE, h: MIN_SIZE, shape: current.shape, angle: current.angle });
     updateEditorRect();
     if (editorOverlay.setPointerCapture && event.pointerId != null) {
       editorOverlay.setPointerCapture(event.pointerId);
@@ -779,11 +2189,14 @@
     const y1 = Math.min(drawStart.y, point.y);
     const x2 = Math.max(drawStart.x, point.x);
     const y2 = Math.max(drawStart.y, point.y);
-    stages[editStageIndex].target = normalizeTarget({
+    const current = activeEditorTarget();
+    setActiveEditorTarget({
       x: x1,
       y: y1,
       w: Math.max(MIN_SIZE, x2 - x1),
-      h: Math.max(MIN_SIZE, y2 - y1)
+      h: Math.max(MIN_SIZE, y2 - y1),
+      shape: current.shape,
+      angle: current.angle
     });
     updateEditorRect();
   }
@@ -793,11 +2206,54 @@
     editorDrawing = false;
     drawStart = null;
     saveCustomTargets();
-    showToast('当たり判定を保存しました', 'note');
+    showToast(`判定${editHitboxIndex + 1}を保存しました`, 'note');
+  }
+
+  function selectHitbox(index) {
+    const targets = getStageTargets(stages[editStageIndex]);
+    if (!targets[index]) return;
+    editHitboxIndex = index;
+    updateEditorRect();
+  }
+
+  function addSecondHitbox() {
+    const stage = stages[editStageIndex];
+    const targets = getStageTargets(stage).slice();
+    if (targets.length >= 2) return;
+    targets.push(normalizeTarget({ x: 0.4, y: 0.4, w: 0.2, h: 0.2, shape: 'rect', angle: 0 }));
+    setStageTargets(stage, targets);
+    editHitboxIndex = 1;
+    saveCustomTargets();
+    updateEditorRect();
+    showToast('判定2を追加しました', 'note');
+  }
+
+  function removeSelectedHitbox() {
+    const stage = stages[editStageIndex];
+    const targets = getStageTargets(stage).slice();
+    if (targets.length <= 1) {
+      showToast('当たり判定は1つ以上必要です', 'ng');
+      return;
+    }
+    targets.splice(editHitboxIndex, 1);
+    setStageTargets(stage, targets);
+    editHitboxIndex = 0;
+    saveCustomTargets();
+    updateEditorRect();
+    showToast('選択中の判定を削除しました', 'note');
+  }
+
+  function setActiveShape(shape) {
+    const normalizedShape = shape === 'circle' ? 'ellipse' : shape;
+    if (!['rect', 'ellipse'].includes(normalizedShape)) return;
+    const t = { ...activeEditorTarget(), shape: normalizedShape };
+    setActiveEditorTarget(t);
+    saveCustomTargets();
+    updateEditorRect();
   }
 
   function tweakTarget(action) {
-    const t = { ...stages[editStageIndex].target };
+    const t = { ...activeEditorTarget() };
     switch (action) {
       case 'up': t.y -= EDIT_STEP; break;
       case 'down': t.y += EDIT_STEP; break;
@@ -819,10 +2275,16 @@
         t.y += EDIT_STEP / 2;
         t.h -= EDIT_STEP;
         break;
+      case 'rotateLeft':
+        t.angle = (Number(t.angle) || 0) - 5;
+        break;
+      case 'rotateRight':
+        t.angle = (Number(t.angle) || 0) + 5;
+        break;
       default:
         return;
     }
-    stages[editStageIndex].target = normalizeTarget(t);
+    setActiveEditorTarget(t);
     updateEditorRect();
     saveCustomTargets();
   }
@@ -849,12 +2311,24 @@
     }
   }
 
+  function targetCode(target) {
+    const t = normalizeTarget(target);
+    const normalizedShape = t.shape === 'circle' ? 'ellipse' : t.shape;
+    const shapeCode = normalizedShape === 'rect' ? '' : `, shape: '${normalizedShape}'`;
+    const angleCode = Math.abs(t.angle || 0) < 0.001 ? '' : `, angle: ${t.angle.toFixed(3)}`;
+    return `{ x: ${t.x.toFixed(3)}, y: ${t.y.toFixed(3)}, w: ${t.w.toFixed(3)}, h: ${t.h.toFixed(3)}${shapeCode}${angleCode} }`;
+  }
+
   function currentStageCode(index) {
     const stage = stages[index];
-    const t = normalizeTarget(stage.target);
+    const targets = getStageTargets(stage);
+    const targetShape = (targets[0].shape === 'circle') ? 'ellipse' : targets[0].shape;
+    const targetsCode = targets.length === 1 && targetShape === 'rect' && Math.abs(targets[0].angle || 0) < 0.001
+      ? `target: ${targetCode(targets[0])}`
+      : `targets: [${targets.map((target) => targetCode(target)).join(', ')}]`;
     const explanationCode = stage.explanation ? `, explanation: ${JSON.stringify(stage.explanation)}` : '';
     const answerTitleCode = stage.answerTitle ? `, answerTitle: ${JSON.stringify(stage.answerTitle)}` : '';
-    return `{ src: '${stage.src}', target: { x: ${t.x.toFixed(3)}, y: ${t.y.toFixed(3)}, w: ${t.w.toFixed(3)}, h: ${t.h.toFixed(3)} }${explanationCode}${answerTitleCode} }`;
+    return `{ src: '${stage.src}', ${targetsCode}${explanationCode}${answerTitleCode} }`;
   }
 
   function allStagesCode() {
@@ -862,8 +2336,8 @@
   }
 
   function resetCurrentTarget() {
-    stages[editStageIndex].target = deepClone(defaultStages[editStageIndex].target);
-    stages[editStageIndex].target = normalizeTarget(stages[editStageIndex].target);
+    setStageTargets(stages[editStageIndex], deepClone(getStageTargets(defaultStages.find(stage => stage.src === stages[editStageIndex].src))));
+    editHitboxIndex = 0;
     saveCustomTargets();
     updateEditorRect();
     showToast('この画像の当たり判定を初期値に戻しました', 'note');
@@ -877,7 +2351,7 @@
   }
 
   function resetCurrentExplanation() {
-    stages[editStageIndex].explanation = defaultStages[editStageIndex].explanation || '';
+    stages[editStageIndex].explanation = defaultStages.find(stage => stage.src === stages[editStageIndex].src).explanation || '';
     if (editorExplanation) editorExplanation.value = stages[editStageIndex].explanation;
     saveCustomExplanations();
     showToast('説明文を初期値に戻しました', 'note');
@@ -892,33 +2366,63 @@
   let editorHoldTimer = null;
   let editorHoldOpened = false;
 
+  function resetSecretTapCounter() {
+    secretTapCount = 0;
+    if (secretTapTimer) {
+      clearTimeout(secretTapTimer);
+      secretTapTimer = null;
+    }
+  }
+
+  function registerSecretTap() {
+    secretTapCount += 1;
+    if (secretTapTimer) clearTimeout(secretTapTimer);
+    secretTapTimer = setTimeout(resetSecretTapCounter, 2800);
+
+    if (secretTapCount >= 7) {
+      resetSecretTapCounter();
+      openHiddenEditor(0);
+      return true;
+    }
+    return false;
+  }
+
   function beginEditorHold(event) {
     if (!secretEditorTrigger) return;
+    event.stopPropagation();
     editorHoldOpened = false;
     clearTimeout(editorHoldTimer);
     editorHoldTimer = setTimeout(() => {
       editorHoldOpened = true;
+      resetSecretTapCounter();
       openHiddenEditor(0);
     }, 1600);
   }
 
-  function endEditorHold() {
+  function endEditorHold(event) {
+    if (event) event.stopPropagation();
     clearTimeout(editorHoldTimer);
     editorHoldTimer = null;
   }
 
   if (secretEditorTrigger) {
     secretEditorTrigger.addEventListener('pointerdown', beginEditorHold);
-    secretEditorTrigger.addEventListener('pointerup', endEditorHold);
-    secretEditorTrigger.addEventListener('pointercancel', endEditorHold);
-    secretEditorTrigger.addEventListener('pointerleave', endEditorHold);
-    secretEditorTrigger.addEventListener('click', (event) => {
+    secretEditorTrigger.addEventListener('pointerup', (event) => {
+      event.preventDefault();
       event.stopPropagation();
+      endEditorHold(event);
       if (editorHoldOpened) {
         editorHoldOpened = false;
         return;
       }
       startCampaign();
+    });
+    secretEditorTrigger.addEventListener('pointercancel', endEditorHold);
+    secretEditorTrigger.addEventListener('pointerleave', endEditorHold);
+    // A short tap starts play; a 1.6 second hold opens only the editor.
+    secretEditorTrigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
     });
   }
 
@@ -926,7 +2430,6 @@
   if (stageSelectButton) {
     stageSelectButton.addEventListener('click', (event) => {
       event.stopPropagation();
-      if (!stageSelectUnlocked) return;
       stopBgm(true);
       setView('select');
     });
@@ -934,7 +2437,6 @@
   retryButton.addEventListener('click', startCampaign);
   if (resultEditButton) resultEditButton.addEventListener('click', () => openEditor(stageIndex));
   if (resultStageSelectButton) resultStageSelectButton.addEventListener('click', () => {
-    if (!stageSelectUnlocked) return;
     stopBgm(true);
     setView('select');
   });
@@ -953,12 +2455,28 @@
     loadEditorStage();
   });
   editorBackButton.addEventListener('click', () => { stopBgm(true); setView('start'); });
-  editorPlayButton.addEventListener('click', () => startSingleStage(editStageIndex));
+  editorPlayButton.addEventListener('click', () => startTestStage(editStageIndex));
   editorResetButton.addEventListener('click', resetCurrentTarget);
+  if (hitboxSlot1Button) hitboxSlot1Button.addEventListener('click', () => selectHitbox(0));
+  if (hitboxSlot2Button) hitboxSlot2Button.addEventListener('click', () => selectHitbox(1));
+  if (addSecondHitboxButton) addSecondHitboxButton.addEventListener('click', addSecondHitbox);
+  if (removeHitboxButton) removeHitboxButton.addEventListener('click', removeSelectedHitbox);
+  document.querySelectorAll('[data-shape]').forEach((button) => {
+    button.addEventListener('click', () => setActiveShape(button.dataset.shape));
+  });
   if (editorExplanationSaveButton) editorExplanationSaveButton.addEventListener('click', saveCurrentExplanation);
   if (editorExplanationResetButton) editorExplanationResetButton.addEventListener('click', resetCurrentExplanation);
   editorCopyCurrentButton.addEventListener('click', () => copyText(currentStageCode(editStageIndex), `ステージ ${editStageIndex + 1} の座標をコピーしました`));
   editorCopyAllButton.addEventListener('click', () => copyText(allStagesCode(), '全画像の座標をコピーしました'));
+  document.querySelectorAll('[data-target-field]').forEach(input => {
+    input.addEventListener('change', () => {
+      const value = Number(input.value);
+      if (!Number.isFinite(value)) { updateEditorRect(); return; }
+      setActiveEditorTarget({ ...activeEditorTarget(), [input.dataset.targetField]: value });
+      saveCustomTargets();
+      updateEditorRect();
+    });
+  });
   editorOverlay.addEventListener('pointerdown', beginDraw);
   editorOverlay.addEventListener('pointermove', moveDraw);
   editorOverlay.addEventListener('pointerup', endDraw);
@@ -994,7 +2512,7 @@
       return;
     }
 
-    if (!editorPanel.classList.contains('hidden')) {
+    if (!editorPanel.classList.contains('hidden') && !event.target.matches('input, textarea, select, [contenteditable]')) {
       if (event.key === 'ArrowUp') { event.preventDefault(); tweakTarget('up'); }
       if (event.key === 'ArrowDown') { event.preventDefault(); tweakTarget('down'); }
       if (event.key === 'ArrowLeft') { event.preventDefault(); tweakTarget('left'); }
@@ -1006,5 +2524,7 @@
   loadCustomTargets();
   loadCustomExplanations();
   loadStageSelectUnlock();
+  sortStagesByArea();
+  loadStageProgress();
   buildStageSelect();
 })();

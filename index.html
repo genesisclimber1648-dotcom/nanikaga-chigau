@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#050507" />
   <title>It feels off</title>
-  <link rel="stylesheet" href="style.css?v=20260927-v37" />
+  <link rel="stylesheet" href="style.css?v=20261012-v50" />
 </head>
 <body>
   <main class="app" id="app">
     <section class="start-screen" id="startPanel" role="button" tabindex="0" aria-label="ゲームをスタート">
-      <img id="secretEditorTrigger" class="title-logo" src="assets/title_logo.png" alt="It feels off" draggable="false" />
+      <img id="secretEditorTrigger" class="title-art" src="assets/title_logo.png?v=20261012-v50" alt="何かがちがう" draggable="false" />
       <div class="simple-rules" aria-label="ルール">
         <p>画像の中の「違和感」をタップ</p>
         <p>3回ミスするとゲームオーバー</p>
-        <p class="start-note">画面をタップしてスタート</p>
-        <button class="secondary start-stage-select hidden" id="stageSelectButton" type="button">ステージ選択</button>
+        <p class="start-note">画像をタップしてスタート</p>
+        <button class="secondary start-stage-select" id="stageSelectButton" type="button">ステージ選択</button>
       </div>
     </section>
 
@@ -30,7 +30,7 @@
 
     <section class="game hidden" id="gamePanel" aria-live="polite">
       <div class="minimal-hud" aria-label="ゲーム情報">
-        <span id="stageText">01 / 70</span>
+        <span id="stageText">01 / 99</span>
         <div class="minimal-actions">
           <button class="icon-button" id="soundToggleButton" type="button" aria-pressed="true" aria-label="BGMと効果音を切り替える">🔊</button>
           <button class="icon-button" id="quitButton" type="button" aria-label="メニューへ戻る">×</button>
@@ -51,8 +51,7 @@
               <div class="answer-stage-label" id="answerStageLabel">STAGE 1</div>
             </div>
           </div>
-          <canvas id="answerPreview" class="answer-preview" role="img" aria-label="正解部分のアップ画像"></canvas>
-          <p class="answer-caption">正解部分のアップ</p>
+          <canvas id="answerPreview" class="answer-preview" role="img" aria-label="正解画像"></canvas>
           <p class="answer-text" id="answerText"></p>
           <button class="primary answer-next-button" id="answerNextButton" type="button">次のステージへ</button>
         </div>
@@ -62,34 +61,62 @@
     <section class="panel editor-panel hidden" id="editorPanel">
       <div class="badge">HITBOX EDITOR</div>
       <h2>当たり判定調整</h2>
-      <p class="lead">画像上をドラッグして正解範囲を囲んでください。下のボタンで少しずつ微調整できます。</p>
+      <p class="lead">画像上をドラッグして正解範囲を囲んでください。下のボタンで位置・サイズ・回転を微調整できます。</p>
 
       <div class="editor-topbar">
         <button class="secondary slim" id="editorPrevButton" type="button">← 前の画像</button>
-        <div class="editor-stage-label" id="editorStageLabel">STAGE 1 / 70</div>
+        <div class="editor-stage-label" id="editorStageLabel">STAGE 1 / 99</div>
         <button class="secondary slim" id="editorNextButton" type="button">次の画像 →</button>
       </div>
 
       <div class="editor-shell" id="editorShell">
         <img id="editorImage" alt="当たり判定調整用画像" draggable="false" />
         <div class="editor-overlay" id="editorOverlay">
-          <div class="edit-rect" id="editRect"></div>
+          <div class="edit-shape selected" id="editShape1"></div>
+          <div class="edit-shape hidden" id="editShape2"></div>
         </div>
         <div id="editorLoading" class="loading">LOADING...</div>
       </div>
 
-      <p class="editor-caption">赤い枠が現在の当たり判定です。</p>
-      <div class="editor-values" id="editorValues">x: 0.000 / y: 0.000 / w: 0.000 / h: 0.000</div>
+      <p class="editor-caption">判定1・判定2を切り替えて編集できます。画像上をドラッグすると選択中の判定を描き直します。四角形と楕円形は回転も可能です。</p>
 
+      <div class="hitbox-editor-toolbar">
+        <div class="hitbox-slot-buttons" aria-label="編集する当たり判定">
+          <button class="secondary active" id="hitboxSlot1Button" type="button" data-hitbox-slot="0">判定1</button>
+          <button class="secondary" id="hitboxSlot2Button" type="button" data-hitbox-slot="1">判定2</button>
+        </div>
+        <div class="hitbox-manage-buttons">
+          <button class="secondary" id="addSecondHitboxButton" type="button">判定2を追加</button>
+          <button class="secondary" id="removeHitboxButton" type="button">選択中を削除</button>
+        </div>
+      </div>
+
+      <div class="shape-selector" aria-label="当たり判定の形">
+        <span>形：</span>
+        <button class="secondary active" type="button" data-shape="rect">四角形</button>
+        <button class="secondary" type="button" data-shape="ellipse">楕円形</button>
+      </div>
+
+      <div class="editor-values" id="editorValues">判定1・方形 / x: 0.000 / y: 0.000 / w: 0.000 / h: 0.000</div>
+
+      <div class="editor-numeric-fields">
+        <label>X<input type="number" data-target-field="x" min="0" max="1" step="0.001"></label>
+        <label>Y<input type="number" data-target-field="y" min="0" max="1" step="0.001"></label>
+        <label>幅<input type="number" data-target-field="w" min="0.01" max="1" step="0.001"></label>
+        <label>高さ<input type="number" data-target-field="h" min="0.01" max="1" step="0.001"></label>
+        <label>回転角（°）<input type="number" data-target-field="angle" step="1"></label>
+      </div>
       <div class="editor-controls-grid">
-        <button class="secondary" type="button" data-edit="up">↑ 上へ</button>
-        <button class="secondary" type="button" data-edit="down">↓ 下へ</button>
-        <button class="secondary" type="button" data-edit="left">← 左へ</button>
-        <button class="secondary" type="button" data-edit="right">→ 右へ</button>
         <button class="secondary" type="button" data-edit="wider">幅 +</button>
         <button class="secondary" type="button" data-edit="narrower">幅 −</button>
         <button class="secondary" type="button" data-edit="taller">高さ +</button>
         <button class="secondary" type="button" data-edit="shorter">高さ −</button>
+        <button class="secondary" type="button" data-edit="up">↑ 上へ</button>
+        <button class="secondary" type="button" data-edit="down">↓ 下へ</button>
+        <button class="secondary" type="button" data-edit="left">← 左へ</button>
+        <button class="secondary" type="button" data-edit="right">→ 右へ</button>
+        <button class="secondary" type="button" data-edit="rotateLeft">回転 ←</button>
+        <button class="secondary" type="button" data-edit="rotateRight">回転 →</button>
       </div>
 
       <section class="explanation-editor" aria-label="正解時の説明テキスト編集">
@@ -115,7 +142,7 @@
       <h2 id="resultTitle">GAME CLEAR!</h2>
       <p id="resultMessage"></p>
       <div class="score-card">
-        <span>クリア数</span><strong id="clearCount">0 / 70</strong>
+        <span>クリア数</span><strong id="clearCount">0 / 99</strong>
         <span>合計ミス</span><strong id="missCount">0</strong>
       </div>
 
@@ -129,6 +156,6 @@
     <div class="toast hidden" id="toast" role="status"></div>
   </main>
 
-  <script src="game.js?v=20260927-v37"></script>
+  <script src="game.js?v=20261012-v51"></script>
 </body>
 </html>
