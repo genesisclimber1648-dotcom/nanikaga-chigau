@@ -1,18 +1,18 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v51_by_src';
-  const LEGACY_TARGET_STORAGE_KEYS = []; // v51 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v51_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v58_by_src';
+  const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v58_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png';
-  const WRONG_ICON_SRC = 'assets/wrong.png';
-  const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3'];
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261016-v58';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261016-v58';
+  const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
   const correctIconPreload = new Image();
@@ -22,14 +22,242 @@
 
   const defaultStages = [
   {
+    "src": "assets/scene36.png",
+    "explanation": "泥棒だ！！",
+    "targets": [
+      {
+        "x": 0.025,
+        "y": 0.27,
+        "w": 0.177,
+        "h": 0.226,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene100.png",
+    "explanation": "ん……？\nまたこのパターン……？",
+    "targets": [
+      {
+        "x": 0.877,
+        "y": 0.685,
+        "w": 0.122,
+        "h": 0.205,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene101.png",
+    "explanation": "釣れますか……？",
+    "targets": [
+      {
+        "x": 0.79,
+        "y": 0.267,
+        "w": 0.17,
+        "h": 0.096,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene102.png",
+    "explanation": "一体どんな競技をしているのか不明だが……\n水槽に落ちたら大変なことになりそうだ",
+    "targets": [
+      {
+        "x": 0.677,
+        "y": 0.538,
+        "w": 0.055,
+        "h": 0.104,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene103.png",
+    "explanation": "やけにガタイの良いメイドがいるな……",
+    "targets": [
+      {
+        "x": 0.61,
+        "y": 0.172,
+        "w": 0.207,
+        "h": 0.341,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene104.png",
+    "explanation": "真ん中のポールだけ棘だらけ……！\nこれでは滑り降りられない",
+    "targets": [
+      {
+        "x": 0.45,
+        "y": 0.111,
+        "w": 0.097,
+        "h": 0.785,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene105.png",
+    "explanation": "鞄の隙間から視線を感じる……",
+    "targets": [
+      {
+        "x": 0.531,
+        "y": 0.727,
+        "w": 0.05,
+        "h": 0.025,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene106.png",
+    "explanation": "道の先端に、靴だけが揃えて置かれている……。\n持ち主はどこへ行ったのだろうか？",
+    "targets": [
+      {
+        "x": 0.882,
+        "y": 0.145,
+        "w": 0.044,
+        "h": 0.019,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene107.png",
+    "explanation": "窓の外に、別のおとぎ話の二人組が迷い込んでいる……。",
+    "targets": [
+      {
+        "x": 0.919,
+        "y": 0.209,
+        "w": 0.045,
+        "h": 0.034,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene108.png",
+    "explanation": "月からの迎えは、宇宙服を着た人……？",
+    "targets": [
+      {
+        "x": 0.825,
+        "y": 0.36,
+        "w": 0.092,
+        "h": 0.088,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene109.png",
+    "explanation": "「時間を忘れそう……」\n忘れてます",
+    "targets": [
+      {
+        "x": 0.772,
+        "y": 0.055,
+        "w": 0.13,
+        "h": 0.079,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene110.png",
+    "explanation": "お菓子の家に子豚は住んでいないはずだが……",
+    "targets": [
+      {
+        "x": 0.71,
+        "y": 0.158,
+        "w": 0.086,
+        "h": 0.066,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene111.png",
+    "explanation": "ガリバー旅行記に、桃太郎一行見参！！",
+    "targets": [
+      {
+        "x": 0.147,
+        "y": 0.795,
+        "w": 0.202,
+        "h": 0.091,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene112.png",
+    "explanation": "金の斧と銀の斧の持ち主は河童だったのか……？",
+    "targets": [
+      {
+        "x": 0.156,
+        "y": 0.143,
+        "w": 0.078,
+        "h": 0.046,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene114.jpg",
+    "explanation": "ベッドの下に、刃物を持った男が潜んでいる……！",
+    "targets": [
+      {
+        "x": 0.212,
+        "y": 0.655,
+        "w": 0.156,
+        "h": 0.17,
+        "shape": "ellipse",
+        "angle": 45
+      }
+    ]
+  },
+  {
+    "src": "assets/scene115.png",
+    "explanation": "清掃カートの袋に、血の付いたゴミが……",
+    "targets": [
+      {
+        "x": 0,
+        "y": 0.65,
+        "w": 0.202,
+        "h": 0.116,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene1.jpg",
     "explanation": "お巡りさんこっちです！\n変な制服を着たお巡りさんが……！！",
-    "target": {
-      "x": 0.685,
-      "y": 0.411,
-      "w": 0.309,
-      "h": 0.381
-    }
+    "targets": [
+      {
+        "x": 0.685,
+        "y": 0.411,
+        "w": 0.309,
+        "h": 0.381,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene2.jpg",
@@ -54,7 +282,8 @@
         "y": 0.567,
         "w": 0.404,
         "h": 0.318,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -67,29 +296,66 @@
         "y": 0.755,
         "w": 0.496,
         "h": 0.184,
-        "angle": 15
+        "angle": 15,
+        "shape": "rect"
       }
     ]
   },
   {
     "src": "assets/scene5.jpg",
     "explanation": "この二人はこんな場所で何をしていたのだろうか……",
-    "target": {
-      "x": 0.763,
-      "y": 0.241,
-      "w": 0.197,
-      "h": 0.449
-    }
+    "targets": [
+      {
+        "x": 0.763,
+        "y": 0.241,
+        "w": 0.197,
+        "h": 0.449,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene93.png",
+    "explanation": "階段に妙な物質が付着している……",
+    "targets": [
+      {
+        "x": 0.285,
+        "y": 0.688,
+        "w": 0.715,
+        "h": 0.106,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene6.jpg",
     "explanation": "普通の歯科医院にこんな道具が置いてあるのだろうか……？",
-    "target": {
-      "x": 0.671,
-      "y": 0.055,
-      "w": 0.327,
-      "h": 0.212
-    }
+    "targets": [
+      {
+        "x": 0.671,
+        "y": 0.055,
+        "w": 0.327,
+        "h": 0.212,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene95.png",
+    "explanation": "息ピッタリ！！",
+    "targets": [
+      {
+        "x": 0.716,
+        "y": 0.287,
+        "w": 0.282,
+        "h": 0.294,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene7.jpg",
@@ -100,7 +366,8 @@
         "y": 0.684,
         "w": 0.22,
         "h": 0.108,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       },
       {
         "x": 0.43,
@@ -135,19 +402,38 @@
         "y": 0.071,
         "w": 0.259,
         "h": 0.276,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene11.jpg",
     "explanation": "その人はそんな巨大なナイフで何を食べるつもりだろうか……？",
-    "target": {
-      "x": 0.625,
-      "y": 0.149,
-      "w": 0.312,
-      "h": 0.16
-    }
+    "targets": [
+      {
+        "x": 0.625,
+        "y": 0.149,
+        "w": 0.312,
+        "h": 0.16,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene89.png",
+    "explanation": "そこには何が埋められているのだろうか……",
+    "targets": [
+      {
+        "x": 0.67,
+        "y": 0.469,
+        "w": 0.186,
+        "h": 0.224,
+        "angle": -50,
+        "shape": "rect"
+      }
+    ]
   },
   {
     "src": "assets/scene10.jpg",
@@ -172,19 +458,38 @@
         "y": 0.191,
         "w": 0.17,
         "h": 0.273,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
-    "src": "assets/scene15.jpg",
-    "explanation": "その湖には古代生物の生き残りが潜んでいるという噂がある",
-    "target": {
-      "x": 0.318,
-      "y": 0.185,
-      "w": 0.557,
-      "h": 0.049
-    }
+    "src": "assets/scene76.png",
+    "explanation": "可愛くないぬいぐるみだ",
+    "targets": [
+      {
+        "x": 0.075,
+        "y": 0.589,
+        "w": 0.265,
+        "h": 0.164,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene99.png",
+    "explanation": "奥にいる女性は人間ではないようだ……",
+    "targets": [
+      {
+        "x": 0.281,
+        "y": 0.067,
+        "w": 0.242,
+        "h": 0.179,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene16.jpg",
@@ -195,7 +500,22 @@
         "y": 0.472,
         "w": 0.246,
         "h": 0.167,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene83.png",
+    "explanation": "羊の群れにパンダが紛れ込んでいる",
+    "targets": [
+      {
+        "x": 0.706,
+        "y": 0.206,
+        "w": 0.286,
+        "h": 0.142,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -236,7 +556,8 @@
         "y": 0.679,
         "w": 0.366,
         "h": 0.106,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -277,7 +598,8 @@
         "y": 0.701,
         "w": 0.265,
         "h": 0.107,
-        "angle": -20
+        "angle": -20,
+        "shape": "rect"
       }
     ]
   },
@@ -290,19 +612,52 @@
         "y": 0.776,
         "w": 0.295,
         "h": 0.12,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene21.jpg",
     "explanation": "不審な人影が見える……",
-    "target": {
-      "x": 0.096,
-      "y": 0.128,
-      "w": 0.098,
-      "h": 0.283
-    }
+    "targets": [
+      {
+        "x": 0.096,
+        "y": 0.128,
+        "w": 0.098,
+        "h": 0.283,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene87.png",
+    "explanation": "早く助けを……！！",
+    "targets": [
+      {
+        "x": 0.37,
+        "y": 0.008,
+        "w": 0.205,
+        "h": 0.172,
+        "shape": "ellipse",
+        "angle": 5
+      }
+    ]
+  },
+  {
+    "src": "assets/scene15.jpg",
+    "explanation": "その湖には古代生物の生き残りが潜んでいるという噂がある",
+    "targets": [
+      {
+        "x": 0.318,
+        "y": 0.185,
+        "w": 0.557,
+        "h": 0.049,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene23.jpg",
@@ -313,7 +668,22 @@
         "y": 0.614,
         "w": 0.252,
         "h": 0.135,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene80.png",
+    "explanation": "車窓に映る人影は……？",
+    "targets": [
+      {
+        "x": 0.837,
+        "y": 0.09,
+        "w": 0.16,
+        "h": 0.209,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -326,7 +696,8 @@
         "y": 0.567,
         "w": 0.243,
         "h": 0.132,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -339,7 +710,8 @@
         "y": 0.257,
         "w": 0.21,
         "h": 0.152,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -352,19 +724,164 @@
         "y": 0.218,
         "w": 0.179,
         "h": 0.137,
-        "angle": 20
+        "angle": 20,
+        "shape": "rect"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene92.png",
+    "explanation": "部屋の奥に人影が……",
+    "targets": [
+      {
+        "x": 0.727,
+        "y": 0.003,
+        "w": 0.155,
+        "h": 0.197,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene27.jpg",
     "explanation": "カーテンの下から誰かの足が……",
-    "target": {
-      "x": 0.772,
-      "y": 0.821,
-      "w": 0.17,
-      "h": 0.128
-    }
+    "targets": [
+      {
+        "x": 0.772,
+        "y": 0.821,
+        "w": 0.17,
+        "h": 0.128,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene29.jpg",
+    "explanation": "それはパンじゃないよ！",
+    "targets": [
+      {
+        "x": 0.068,
+        "y": 0.137,
+        "w": 0.179,
+        "h": 0.151,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene30.jpg",
+    "explanation": "一緒に食べる……？",
+    "targets": [
+      {
+        "x": 0.728,
+        "y": 0.104,
+        "w": 0.153,
+        "h": 0.138,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene31.jpg",
+    "explanation": "最近はゴリラにも職業選択の自由が……？",
+    "targets": [
+      {
+        "x": 0.687,
+        "y": 0.258,
+        "w": 0.224,
+        "h": 0.118,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene34.jpg",
+    "explanation": "窓から誰かが覗いている……",
+    "targets": [
+      {
+        "x": 0.004,
+        "y": 0.082,
+        "w": 0.124,
+        "h": 0.164,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene38.jpg",
+    "explanation": "置き配は便利だが、荷物が届いた直後には取りに行かない方が良さそうだ",
+    "targets": [
+      {
+        "x": 0,
+        "y": 0.733,
+        "w": 0.149,
+        "h": 0.125,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene37.jpg",
+    "explanation": "蠅の王がいる",
+    "targets": [
+      {
+        "x": 0.67,
+        "y": 0.623,
+        "w": 0.221,
+        "h": 0.106,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene84.png",
+    "explanation": "それは別の意味で涼しくなるかも……",
+    "targets": [
+      {
+        "x": 0.673,
+        "y": 0.327,
+        "w": 0.11,
+        "h": 0.166,
+        "angle": -20,
+        "shape": "rect"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene90.png",
+    "explanation": "「今日はやけにお客様の視線を感じるわ……」\nまあ、そんな恰好をしていればねぇ……",
+    "targets": [
+      {
+        "x": 0.418,
+        "y": 0.794,
+        "w": 0.137,
+        "h": 0.133,
+        "angle": 10,
+        "shape": "rect"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene94.png",
+    "explanation": "それ、ズルくない……？",
+    "targets": [
+      {
+        "x": 0.643,
+        "y": 0.529,
+        "w": 0.15,
+        "h": 0.12,
+        "angle": 5,
+        "shape": "rect"
+      }
+    ]
   },
   {
     "src": "assets/scene28.jpg",
@@ -381,116 +898,6 @@
     ]
   },
   {
-    "src": "assets/scene29.jpg",
-    "explanation": "それはパンじゃないよ！",
-    "targets": [
-      {
-        "x": 0.068,
-        "y": 0.137,
-        "w": 0.179,
-        "h": 0.151,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene30.jpg",
-    "explanation": "一緒に食べる……？",
-    "target": {
-      "x": 0.728,
-      "y": 0.104,
-      "w": 0.153,
-      "h": 0.138
-    }
-  },
-  {
-    "src": "assets/scene31.jpg",
-    "explanation": "最近はゴリラにも職業選択の自由が……？",
-    "targets": [
-      {
-        "x": 0.687,
-        "y": 0.258,
-        "w": 0.224,
-        "h": 0.118,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene32.jpg",
-    "explanation": "お主、本当に人間か……？",
-    "targets": [
-      {
-        "x": 0.072,
-        "y": 0.694,
-        "w": 0.19,
-        "h": 0.137,
-        "shape": "ellipse",
-        "angle": 10
-      },
-      {
-        "x": 0.331,
-        "y": 0.342,
-        "w": 0.064,
-        "h": 0.051,
-        "angle": 25
-      }
-    ]
-  },
-  {
-    "src": "assets/scene34.jpg",
-    "explanation": "窓から誰かが覗いている……",
-    "target": {
-      "x": 0.004,
-      "y": 0.082,
-      "w": 0.124,
-      "h": 0.164
-    }
-  },
-  {
-    "src": "assets/scene35.jpg",
-    "explanation": "その男性はこの世の者ではなさそうだ……",
-    "target": {
-      "x": 0.825,
-      "y": 0.658,
-      "w": 0.172,
-      "h": 0.096
-    }
-  },
-  {
-    "src": "assets/scene36.jpg",
-    "explanation": "クローゼットの中に誰かが潜んでいる……",
-    "target": {
-      "x": 0.268,
-      "y": 0.611,
-      "w": 0.243,
-      "h": 0.081
-    }
-  },
-  {
-    "src": "assets/scene37.jpg",
-    "explanation": "蠅の王がいる",
-    "targets": [
-      {
-        "x": 0.67,
-        "y": 0.623,
-        "w": 0.221,
-        "h": 0.106,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene38.jpg",
-    "explanation": "置き配は便利だが、荷物が届いた直後には取りに行かない方が良さそうだ",
-    "target": {
-      "x": 0,
-      "y": 0.733,
-      "w": 0.149,
-      "h": 0.125
-    }
-  },
-  {
     "src": "assets/scene22.jpg",
     "explanation": "覗かれている……",
     "targets": [
@@ -499,7 +906,8 @@
         "y": 0.32,
         "w": 0.144,
         "h": 0.152,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -512,19 +920,38 @@
         "y": 0.853,
         "w": 0.361,
         "h": 0.046,
-        "angle": -40
+        "angle": -40,
+        "shape": "rect"
       }
     ]
   },
   {
     "src": "assets/scene40.jpg",
     "explanation": "そのボトルの中身は一体……？",
-    "target": {
-      "x": 0.754,
-      "y": 0.69,
-      "w": 0.128,
-      "h": 0.129
-    }
+    "targets": [
+      {
+        "x": 0.754,
+        "y": 0.69,
+        "w": 0.128,
+        "h": 0.129,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene35.jpg",
+    "explanation": "その男性はこの世の者ではなさそうだ……",
+    "targets": [
+      {
+        "x": 0.825,
+        "y": 0.658,
+        "w": 0.172,
+        "h": 0.096,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene41.jpg",
@@ -535,7 +962,8 @@
         "y": 0.218,
         "w": 0.132,
         "h": 0.151,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -548,7 +976,8 @@
         "y": 0.649,
         "w": 0.142,
         "h": 0.127,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -561,7 +990,22 @@
         "y": 0.218,
         "w": 0.151,
         "h": 0.119,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene79.png",
+    "explanation": "元気に走ってくる少女\n随分顔色が悪いようだが……",
+    "targets": [
+      {
+        "x": 0.772,
+        "y": 0.294,
+        "w": 0.117,
+        "h": 0.145,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -574,7 +1018,8 @@
         "y": 0.416,
         "w": 0.203,
         "h": 0.078,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -587,7 +1032,8 @@
         "y": 0.382,
         "w": 0.177,
         "h": 0.089,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -600,7 +1046,8 @@
         "y": 0.371,
         "w": 0.156,
         "h": 0.1,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -613,7 +1060,8 @@
         "y": 0.387,
         "w": 0.187,
         "h": 0.08,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -626,7 +1074,8 @@
         "y": 0.208,
         "w": 0.131,
         "h": 0.113,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -639,19 +1088,38 @@
         "y": 0.427,
         "w": 0.188,
         "h": 0.072,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene73.jpg",
     "explanation": "この傘はどうやってさすのだろうか……？",
-    "target": {
-      "x": 0,
-      "y": 0.421,
-      "w": 0.089,
-      "h": 0.116
-    }
+    "targets": [
+      {
+        "x": 0,
+        "y": 0.421,
+        "w": 0.089,
+        "h": 0.116,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene88.png",
+    "explanation": "その水は海の味がしそうだ",
+    "targets": [
+      {
+        "x": 0.26,
+        "y": 0.568,
+        "w": 0.151,
+        "h": 0.086,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene50.jpg",
@@ -662,7 +1130,8 @@
         "y": 0.01,
         "w": 0.166,
         "h": 0.076,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -675,7 +1144,8 @@
         "y": 0.174,
         "w": 0.13,
         "h": 0.09,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -688,19 +1158,24 @@
         "y": 0.619,
         "w": 0.204,
         "h": 0.056,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene53.jpg",
     "explanation": "誰かが見ている……",
-    "target": {
-      "x": 0.813,
-      "y": 0.258,
-      "w": 0.103,
-      "h": 0.086
-    }
+    "targets": [
+      {
+        "x": 0.813,
+        "y": 0.258,
+        "w": 0.103,
+        "h": 0.086,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene54.jpg",
@@ -711,7 +1186,8 @@
         "y": 0.775,
         "w": 0.159,
         "h": 0.07,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -724,7 +1200,8 @@
         "y": 0.444,
         "w": 0.118,
         "h": 0.094,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -737,7 +1214,22 @@
         "y": 0.169,
         "w": 0.099,
         "h": 0.112,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene97.png",
+    "explanation": "窓の外にいる者は……",
+    "targets": [
+      {
+        "x": 0.883,
+        "y": 0.19,
+        "w": 0.113,
+        "h": 0.094,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -750,19 +1242,66 @@
         "y": 0.441,
         "w": 0.161,
         "h": 0.061,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene98.png",
+    "explanation": "この回廊自体が違和感だが、その栓を開けると何が起こるのだろうか……？",
+    "targets": [
+      {
+        "x": 0.06,
+        "y": 0.665,
+        "w": 0.125,
+        "h": 0.074,
+        "shape": "ellipse",
+        "angle": -10
       }
     ]
   },
   {
     "src": "assets/scene58.jpg",
     "explanation": "おい！\nちゃんと彫ってるんだろうな！？",
-    "target": {
-      "x": 0.45,
-      "y": 0.546,
-      "w": 0.119,
-      "h": 0.056
-    }
+    "targets": [
+      {
+        "x": 0.45,
+        "y": 0.546,
+        "w": 0.119,
+        "h": 0.056,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene86.png",
+    "explanation": "その入れ歯は誰の物なのだろうか……",
+    "targets": [
+      {
+        "x": 0.516,
+        "y": 0.868,
+        "w": 0.127,
+        "h": 0.065,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene81.png",
+    "explanation": "最新型のロボットアームはとてもリアルに出来ている",
+    "targets": [
+      {
+        "x": 0.514,
+        "y": 0.099,
+        "w": 0.092,
+        "h": 0.089,
+        "shape": "ellipse",
+        "angle": 10
+      }
+    ]
   },
   {
     "src": "assets/scene59.jpg",
@@ -773,20 +1312,8 @@
         "y": 0.236,
         "w": 0.074,
         "h": 0.11,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene60.jpg",
-    "explanation": "花火の中に目のようなものが……",
-    "targets": [
-      {
-        "x": 0.47,
-        "y": 0.096,
-        "w": 0.096,
-        "h": 0.039,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -799,7 +1326,8 @@
         "y": 0.229,
         "w": 0.059,
         "h": 0.107,
-        "angle": 25
+        "angle": 25,
+        "shape": "rect"
       }
     ]
   },
@@ -812,19 +1340,38 @@
         "y": 0.354,
         "w": 0.134,
         "h": 0.059,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene62.jpg",
     "explanation": "最近この辺りに下着泥棒が出没しているらしい",
-    "target": {
-      "x": 0.686,
-      "y": 0.52,
-      "w": 0.144,
-      "h": 0.043
-    }
+    "targets": [
+      {
+        "x": 0.686,
+        "y": 0.52,
+        "w": 0.144,
+        "h": 0.043,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene91.png",
+    "explanation": "まるで生き物のように動くリボン\n……本物の生き物だった",
+    "targets": [
+      {
+        "x": 0.779,
+        "y": 0.231,
+        "w": 0.139,
+        "h": 0.056,
+        "shape": "ellipse",
+        "angle": 10
+      }
+    ]
   },
   {
     "src": "assets/scene63.jpg",
@@ -835,19 +1382,38 @@
         "y": 0.47,
         "w": 0.133,
         "h": 0.058,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene77.png",
+    "explanation": "ここを何階だと思っているのか……",
+    "targets": [
+      {
+        "x": 0.817,
+        "y": 0.06,
+        "w": 0.08,
+        "h": 0.093,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene65.jpg",
     "explanation": "的の後に誰かが立っているようだが……",
-    "target": {
-      "x": 0.732,
-      "y": 0.409,
-      "w": 0.108,
-      "h": 0.05
-    }
+    "targets": [
+      {
+        "x": 0.732,
+        "y": 0.409,
+        "w": 0.108,
+        "h": 0.05,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   },
   {
     "src": "assets/scene74.jpg",
@@ -858,7 +1424,8 @@
         "y": 0.795,
         "w": 0.105,
         "h": 0.065,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -871,7 +1438,8 @@
         "y": 0.288,
         "w": 0.081,
         "h": 0.076,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -884,7 +1452,8 @@
         "y": 0.678,
         "w": 0.12,
         "h": 0.039,
-        "angle": -15
+        "angle": -15,
+        "shape": "rect"
       }
     ]
   },
@@ -897,7 +1466,8 @@
         "y": 0.205,
         "w": 0.108,
         "h": 0.046,
-        "shape": "ellipse"
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -924,304 +1494,22 @@
         "y": 0.138,
         "w": 0.095,
         "h": 0.045,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene70.jpg",
-    "explanation": "車を搬入した際に轢かれた者がいるようだ……",
-    "targets": [
-      {
-        "x": 0.005,
-        "y": 0.63,
-        "w": 0.086,
-        "h": 0.042,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene71.jpg",
-    "explanation": "お洒落な鳩だ",
-    "targets": [
-      {
-        "x": 0.123,
-        "y": 0.317,
-        "w": 0.083,
-        "h": 0.042,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene72.jpg",
-    "explanation": "こんにちは！！",
-    "targets": [
-      {
-        "x": 0.734,
-        "y": 0.237,
-        "w": 0.073,
-        "h": 0.035,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene76.png",
-    "explanation": "可愛くないぬいぐるみだ",
-    "targets": [
-      {
-        "x": 0.075,
-        "y": 0.589,
-        "w": 0.265,
-        "h": 0.164,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene77.png",
-    "explanation": "ここを何階だと思っているのか……",
-    "targets": [
-      {
-        "x": 0.817,
-        "y": 0.06,
-        "w": 0.08,
-        "h": 0.093,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene78.png",
-    "explanation": "扉の隙間から覗く目は……？",
-    "targets": [
-      {
-        "x": 0.945,
-        "y": 0.276,
-        "w": 0.047,
-        "h": 0.027,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene79.png",
-    "explanation": "元気に走ってくる少女\n随分顔色が悪いようだが……",
-    "targets": [
-      {
-        "x": 0.772,
-        "y": 0.294,
-        "w": 0.117,
-        "h": 0.145,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene80.png",
-    "explanation": "車窓に映る人影は……？",
-    "targets": [
-      {
-        "x": 0.837,
-        "y": 0.09,
-        "w": 0.16,
-        "h": 0.209,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene81.png",
-    "explanation": "最新型のロボットアームはとてもリアルに出来ている",
-    "targets": [
-      {
-        "x": 0.514,
-        "y": 0.099,
-        "w": 0.092,
-        "h": 0.089,
         "shape": "ellipse",
-        "angle": 10
+        "angle": 0
       }
     ]
   },
   {
     "src": "assets/scene82.png",
     "explanation": "郵便受けから誰かが覗いている……",
-    "target": {
-      "x": 0.663,
-      "y": 0.246,
-      "w": 0.136,
-      "h": 0.024
-    }
-  },
-  {
-    "src": "assets/scene83.png",
-    "explanation": "羊の群れにパンダが紛れ込んでいる",
     "targets": [
       {
-        "x": 0.706,
-        "y": 0.206,
-        "w": 0.286,
-        "h": 0.142,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene84.png",
-    "explanation": "涼むために手にしているのは、うちわではなくノコギリ……！",
-    "targets": [
-      {
-        "x": 0.673,
-        "y": 0.327,
-        "w": 0.11,
-        "h": 0.166,
-        "angle": -20
-      }
-    ]
-  },
-  {
-    "src": "assets/scene85.png",
-    "explanation": "それはボトルではなくキャップなのでは……？",
-    "targets": [
-      {
-        "x": 0.756,
-        "y": 0.263,
-        "w": 0.074,
-        "h": 0.033,
-        "shape": "ellipse",
-        "angle": -15
-      }
-    ]
-  },
-  {
-    "src": "assets/scene86.png",
-    "explanation": "その入れ歯は誰の物なのだろうか……",
-    "targets": [
-      {
-        "x": 0.516,
-        "y": 0.868,
-        "w": 0.127,
-        "h": 0.065,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene87.png",
-    "explanation": "早く助けを……！！",
-    "targets": [
-      {
-        "x": 0.37,
-        "y": 0.008,
-        "w": 0.205,
-        "h": 0.172,
-        "shape": "ellipse",
-        "angle": 5
-      }
-    ]
-  },
-  {
-    "src": "assets/scene88.png",
-    "explanation": "その水は海の味がしそうだ",
-    "targets": [
-      {
-        "x": 0.26,
-        "y": 0.568,
-        "w": 0.151,
-        "h": 0.086,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene89.png",
-    "explanation": "そこには何が埋められているのだろうか……",
-    "targets": [
-      {
-        "x": 0.67,
-        "y": 0.469,
-        "w": 0.186,
-        "h": 0.224,
-        "angle": -50
-      }
-    ]
-  },
-  {
-    "src": "assets/scene90.png",
-    "explanation": "「今日はやけにお客様の視線を感じるわ……」\nまあ、そんな恰好をしていればねぇ……",
-    "targets": [
-      {
-        "x": 0.418,
-        "y": 0.794,
-        "w": 0.137,
-        "h": 0.133,
-        "angle": 10
-      }
-    ]
-  },
-  {
-    "src": "assets/scene91.png",
-    "explanation": "まるで生き物のように動くリボン\n……本物の生き物だった",
-    "targets": [
-      {
-        "x": 0.779,
-        "y": 0.231,
-        "w": 0.139,
-        "h": 0.056,
-        "shape": "ellipse",
-        "angle": 10
-      }
-    ]
-  },
-  {
-    "src": "assets/scene92.png",
-    "explanation": "部屋の奥に人影が……",
-    "targets": [
-      {
-        "x": 0.727,
-        "y": 0.003,
-        "w": 0.155,
-        "h": 0.197,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene93.png",
-    "explanation": "階段に妙な物質が付着している……",
-    "target": {
-      "x": 0.285,
-      "y": 0.688,
-      "w": 0.715,
-      "h": 0.106
-    }
-  },
-  {
-    "src": "assets/scene94.png",
-    "explanation": "それ、ズルくない……？",
-    "targets": [
-      {
-        "x": 0.643,
-        "y": 0.529,
-        "w": 0.15,
-        "h": 0.12,
-        "angle": 5
-      }
-    ]
-  },
-  {
-    "src": "assets/scene95.png",
-    "explanation": "息ピッタリ！！",
-    "targets": [
-      {
-        "x": 0.716,
-        "y": 0.287,
-        "w": 0.282,
-        "h": 0.294,
-        "shape": "ellipse"
+        "x": 0.663,
+        "y": 0.246,
+        "w": 0.136,
+        "h": 0.024,
+        "shape": "rect",
+        "angle": 0
       }
     ]
   },
@@ -1240,48 +1528,93 @@
     ]
   },
   {
-    "src": "assets/scene97.png",
-    "explanation": "窓の外にいる者は……",
+    "src": "assets/scene60.jpg",
+    "explanation": "花火の中に目のようなものが……",
     "targets": [
       {
-        "x": 0.883,
-        "y": 0.19,
-        "w": 0.113,
-        "h": 0.094,
-        "shape": "ellipse"
-      }
-    ]
-  },
-  {
-    "src": "assets/scene98.png",
-    "explanation": "この回廊自体が違和感だが、その栓を開けると何が起こるのだろうか……？",
-    "targets": [
-      {
-        "x": 0.06,
-        "y": 0.665,
-        "w": 0.125,
-        "h": 0.074,
+        "x": 0.47,
+        "y": 0.096,
+        "w": 0.096,
+        "h": 0.039,
         "shape": "ellipse",
-        "angle": -10
+        "angle": 0
       }
     ]
   },
   {
-    "src": "assets/scene99.png",
-    "explanation": "奥にいる女性は人間ではないようだ……",
+    "src": "assets/scene70.jpg",
+    "explanation": "車を搬入した際に轢かれた者がいるようだ……",
     "targets": [
       {
-        "x": 0.281,
-        "y": 0.067,
-        "w": 0.242,
-        "h": 0.179,
-        "shape": "ellipse"
+        "x": 0.005,
+        "y": 0.63,
+        "w": 0.086,
+        "h": 0.042,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene71.jpg",
+    "explanation": "お洒落な鳩だ",
+    "targets": [
+      {
+        "x": 0.123,
+        "y": 0.317,
+        "w": 0.083,
+        "h": 0.042,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene72.jpg",
+    "explanation": "こんにちは！！",
+    "targets": [
+      {
+        "x": 0.734,
+        "y": 0.237,
+        "w": 0.073,
+        "h": 0.035,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene85.png",
+    "explanation": "それはボトルではなくキャップなのでは……？",
+    "targets": [
+      {
+        "x": 0.756,
+        "y": 0.263,
+        "w": 0.074,
+        "h": 0.033,
+        "shape": "ellipse",
+        "angle": -15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene78.png",
+    "explanation": "扉の隙間から覗く目は……？",
+    "targets": [
+      {
+        "x": 0.945,
+        "y": 0.276,
+        "w": 0.047,
+        "h": 0.027,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   }
 ];
-  const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.jpg","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
-
+  const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
+  // Keep stable save-data IDs while loading the optimized JPEG assets.
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261016-v58";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
@@ -1532,11 +1865,10 @@
       sum + t.w * t.h * (t.shape === 'ellipse' ? Math.PI / 4 : 1), 0);
   }
 
-  function sortStagesByArea() {
+  function restoreStageOrder() {
     const playingSrc = stages[stageIndex]?.src;
     const editingSrc = stages[editStageIndex]?.src;
-    stages.sort((a, b) => stageArea(b) - stageArea(a) ||
-      defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
+    stages.sort((a, b) => defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
     stageIndex = Math.max(0, stages.findIndex(stage => stage.src === playingSrc));
     editStageIndex = Math.max(0, stages.findIndex(stage => stage.src === editingSrc));
     reachedStageIds.add(stages[0].src);
@@ -1598,7 +1930,7 @@
     clearTimeout(pendingResultTimer);
     if (view !== 'game') hideAnswerOverlay();
     if (view === 'start' || view === 'select') {
-      sortStagesByArea();
+      restoreStageOrder();
       saveStageProgress();
       buildStageSelect();
     }
@@ -1866,7 +2198,7 @@
     if (playMode !== 'test') { reachedStageIds.add(stage.src); saveStageProgress(); }
     sceneImage.onload = () => loading.classList.add('hidden');
     sceneImage.onerror = () => { loading.textContent = '画像を読み込めませんでした'; };
-    sceneImage.src = stage.src;
+    sceneImage.src = stageImageSrc(stage.src);
   }
 
   function buildStageSelect() {
@@ -1879,7 +2211,7 @@
       button.className = `stage-card${cleared ? ' cleared' : (available ? '' : ' locked')}`;
       button.disabled = !available;
       button.setAttribute('aria-disabled', available ? 'false' : 'true');
-      button.innerHTML = `<img class="stage-thumb" src="${stage.src}" alt="ステージ${index + 1}"><strong>STAGE ${index + 1}${cleared ? ' ✓' : (available ? '' : ' 🔒')}</strong>`;
+      button.innerHTML = `<img class="stage-thumb" src="${stageImageSrc(stage.src)}" alt="ステージ${index + 1}"><strong>STAGE ${index + 1}${cleared ? ' ✓' : (available ? '' : ' 🔒')}</strong>`;
       if (available) button.addEventListener('click', () => startSelectedStage(index));
       stageGrid.appendChild(button);
     });
@@ -2133,7 +2465,7 @@
     editorImage.onerror = () => {
       editorLoading.textContent = '画像を読み込めませんでした';
     };
-    editorImage.src = stages[editStageIndex].src;
+    editorImage.src = stageImageSrc(stages[editStageIndex].src);
     updateEditorRect();
     if (editorExplanation) editorExplanation.value = stages[editStageIndex].explanation || '';
   }
@@ -2520,11 +2852,31 @@
     }
   });
 
+  try {
+    const previous = 'assets/scene36.jpg', current = 'assets/scene36.png';
+    const progress = JSON.parse(localStorage.getItem(CLEARED_PROGRESS_KEY) || 'null');
+    if (progress) {
+      for (const key of ['reached', 'cleared']) if (Array.isArray(progress[key])) progress[key] = [...new Set(progress[key].map(src => src === previous ? current : src))];
+      localStorage.setItem(CLEARED_PROGRESS_KEY, JSON.stringify(progress));
+    }
+    for (const key of [STORAGE_KEY, EXPLANATION_STORAGE_KEY]) {
+      const saved = JSON.parse(localStorage.getItem(key) || 'null');
+      if (saved && Object.hasOwn(saved, previous)) { delete saved[previous]; localStorage.setItem(key, JSON.stringify(saved)); }
+    }
+  } catch (error) { console.warn('stage36 migration failed', error); }
   updateSoundToggle();
+  try {
+    if (localStorage.getItem('iwakan_scene105_revision') !== 'v53') {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      delete saved['assets/scene105.png'];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+      localStorage.setItem('iwakan_scene105_revision', 'v53');
+    }
+  } catch (error) { console.warn('scene105 update could not be saved', error); }
   loadCustomTargets();
   loadCustomExplanations();
   loadStageSelectUnlock();
-  sortStagesByArea();
+  restoreStageOrder();
   loadStageProgress();
   buildStageSelect();
 })();
