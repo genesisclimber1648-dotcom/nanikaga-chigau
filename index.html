@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#050507" />
   <title>It feels off</title>
-  <link rel="stylesheet" href="style.css?v=20261016-v58" />
+  <link rel="stylesheet" href="style.css?v=20261020-v60" />
 </head>
 <body>
   <main class="app" id="app">
     <section class="start-screen" id="startPanel" role="button" tabindex="0" aria-label="ゲームをスタート">
-      <img id="secretEditorTrigger" class="title-art" src="assets/title_logo.jpg?v=20261016-v58" alt="何かがちがう" draggable="false" />
+      <img id="secretEditorTrigger" class="title-art" src="assets/title_logo.jpg?v=20261020-v60" alt="何かがちがう" draggable="false" />
       <div class="simple-rules" aria-label="ルール">
         <p>画像の中の「違和感」をタップ</p>
         <p>3回ミスするとゲームオーバー</p>
@@ -30,7 +30,7 @@
 
     <section class="game hidden" id="gamePanel" aria-live="polite">
       <div class="minimal-hud" aria-label="ゲーム情報">
-        <span id="stageText">01 / 113</span>
+        <span id="stageText">01 / 119</span>
         <div class="minimal-actions">
           <button class="icon-button" id="soundToggleButton" type="button" aria-pressed="true" aria-label="BGMと効果音を切り替える">🔊</button>
           <button class="icon-button" id="quitButton" type="button" aria-label="メニューへ戻る">×</button>
@@ -46,7 +46,7 @@
       <div class="answer-overlay hidden" id="answerOverlay" role="dialog" aria-modal="true" aria-label="正解解説">
         <div class="answer-card">
           <div class="answer-head">
-            <div class="answer-symbol"><img src="assets/correct.png?v=20261016-v58" alt="正解" /></div>
+            <div class="answer-symbol"><img src="assets/correct.png?v=20261020-v60" alt="正解" /></div>
             <div class="answer-head-copy">
               <div class="answer-stage-label" id="answerStageLabel">STAGE 1</div>
             </div>
@@ -65,7 +65,7 @@
 
       <div class="editor-topbar">
         <button class="secondary slim" id="editorPrevButton" type="button">← 前の画像</button>
-        <div class="editor-stage-label" id="editorStageLabel">STAGE 1 / 113</div>
+        <div class="editor-stage-label" id="editorStageLabel">STAGE 1 / 119</div>
         <button class="secondary slim" id="editorNextButton" type="button">次の画像 →</button>
       </div>
 
@@ -138,11 +138,11 @@
     </section>
 
     <section class="panel result-panel result-wide hidden" id="resultPanel">
-      <div class="result-symbol" id="resultSymbol"><img src="assets/correct.png?v=20261016-v58" alt="正解"></div>
+      <div class="result-symbol" id="resultSymbol"><img src="assets/correct.png?v=20261020-v60" alt="正解"></div>
       <h2 id="resultTitle">GAME CLEAR!</h2>
       <p id="resultMessage"></p>
       <div class="score-card">
-        <span>クリア数</span><strong id="clearCount">0 / 113</strong>
+        <span>クリア数</span><strong id="clearCount">0 / 119</strong>
         <span>合計ミス</span><strong id="missCount">0</strong>
       </div>
 
@@ -156,6 +156,6 @@
     <div class="toast hidden" id="toast" role="status"></div>
   </main>
 
-  <script src="game.js?v=20261016-v58"></script>
+  <script src="game.js?v=20261020-v60"></script>
 </body>
 </html>

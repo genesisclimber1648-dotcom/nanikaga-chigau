@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v58_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v60_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v58_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v60_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261016-v58';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261016-v58';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261020-v60';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261020-v60';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -20,231 +20,7 @@
   const wrongIconPreload = new Image();
   wrongIconPreload.src = WRONG_ICON_SRC;
 
-  const defaultStages = [
-  {
-    "src": "assets/scene36.png",
-    "explanation": "泥棒だ！！",
-    "targets": [
-      {
-        "x": 0.025,
-        "y": 0.27,
-        "w": 0.177,
-        "h": 0.226,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene100.png",
-    "explanation": "ん……？\nまたこのパターン……？",
-    "targets": [
-      {
-        "x": 0.877,
-        "y": 0.685,
-        "w": 0.122,
-        "h": 0.205,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene101.png",
-    "explanation": "釣れますか……？",
-    "targets": [
-      {
-        "x": 0.79,
-        "y": 0.267,
-        "w": 0.17,
-        "h": 0.096,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene102.png",
-    "explanation": "一体どんな競技をしているのか不明だが……\n水槽に落ちたら大変なことになりそうだ",
-    "targets": [
-      {
-        "x": 0.677,
-        "y": 0.538,
-        "w": 0.055,
-        "h": 0.104,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene103.png",
-    "explanation": "やけにガタイの良いメイドがいるな……",
-    "targets": [
-      {
-        "x": 0.61,
-        "y": 0.172,
-        "w": 0.207,
-        "h": 0.341,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene104.png",
-    "explanation": "真ん中のポールだけ棘だらけ……！\nこれでは滑り降りられない",
-    "targets": [
-      {
-        "x": 0.45,
-        "y": 0.111,
-        "w": 0.097,
-        "h": 0.785,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene105.png",
-    "explanation": "鞄の隙間から視線を感じる……",
-    "targets": [
-      {
-        "x": 0.531,
-        "y": 0.727,
-        "w": 0.05,
-        "h": 0.025,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene106.png",
-    "explanation": "道の先端に、靴だけが揃えて置かれている……。\n持ち主はどこへ行ったのだろうか？",
-    "targets": [
-      {
-        "x": 0.882,
-        "y": 0.145,
-        "w": 0.044,
-        "h": 0.019,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene107.png",
-    "explanation": "窓の外に、別のおとぎ話の二人組が迷い込んでいる……。",
-    "targets": [
-      {
-        "x": 0.919,
-        "y": 0.209,
-        "w": 0.045,
-        "h": 0.034,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene108.png",
-    "explanation": "月からの迎えは、宇宙服を着た人……？",
-    "targets": [
-      {
-        "x": 0.825,
-        "y": 0.36,
-        "w": 0.092,
-        "h": 0.088,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene109.png",
-    "explanation": "「時間を忘れそう……」\n忘れてます",
-    "targets": [
-      {
-        "x": 0.772,
-        "y": 0.055,
-        "w": 0.13,
-        "h": 0.079,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene110.png",
-    "explanation": "お菓子の家に子豚は住んでいないはずだが……",
-    "targets": [
-      {
-        "x": 0.71,
-        "y": 0.158,
-        "w": 0.086,
-        "h": 0.066,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene111.png",
-    "explanation": "ガリバー旅行記に、桃太郎一行見参！！",
-    "targets": [
-      {
-        "x": 0.147,
-        "y": 0.795,
-        "w": 0.202,
-        "h": 0.091,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene112.png",
-    "explanation": "金の斧と銀の斧の持ち主は河童だったのか……？",
-    "targets": [
-      {
-        "x": 0.156,
-        "y": 0.143,
-        "w": 0.078,
-        "h": 0.046,
-        "shape": "ellipse",
-        "angle": 0
-      }
-    ]
-  },
-  {
-    "src": "assets/scene114.jpg",
-    "explanation": "ベッドの下に、刃物を持った男が潜んでいる……！",
-    "targets": [
-      {
-        "x": 0.212,
-        "y": 0.655,
-        "w": 0.156,
-        "h": 0.17,
-        "shape": "ellipse",
-        "angle": 45
-      }
-    ]
-  },
-  {
-    "src": "assets/scene115.png",
-    "explanation": "清掃カートの袋に、血の付いたゴミが……",
-    "targets": [
-      {
-        "x": 0,
-        "y": 0.65,
-        "w": 0.202,
-        "h": 0.116,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
+  const defaultStages =[
   {
     "src": "assets/scene1.jpg",
     "explanation": "お巡りさんこっちです！\n変な制服を着たお巡りさんが……！！",
@@ -288,6 +64,20 @@
     ]
   },
   {
+    "src": "assets/scene120.jpg",
+    "explanation": "撮られてるよ！！",
+    "targets": [
+      {
+        "x": 0.69,
+        "y": 0.025,
+        "w": 0.3,
+        "h": 0.32,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene4.jpg",
     "explanation": "この公園には、古代の巨大生物が生息しているようだ……",
     "targets": [
@@ -310,6 +100,20 @@
         "y": 0.241,
         "w": 0.197,
         "h": 0.449,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene104.png",
+    "explanation": "真ん中のポールだけ棘だらけ……！\nこれでは滑り降りられない",
+    "targets": [
+      {
+        "x": 0.45,
+        "y": 0.111,
+        "w": 0.097,
+        "h": 0.785,
         "shape": "rect",
         "angle": 0
       }
@@ -408,6 +212,62 @@
     ]
   },
   {
+    "src": "assets/scene117.jpg",
+    "explanation": "カーテンの陰に誰かが隠れているが……\nズボラな彼女は気付いていないようだ",
+    "targets": [
+      {
+        "x": 0.1,
+        "y": 0.145,
+        "w": 0.15,
+        "h": 0.37,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene103.png",
+    "explanation": "やけにガタイの良いメイドがいるな……",
+    "targets": [
+      {
+        "x": 0.61,
+        "y": 0.172,
+        "w": 0.207,
+        "h": 0.341,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene116.jpg",
+    "explanation": "未成年の飲酒は犯罪だよ！",
+    "targets": [
+      {
+        "x": 0.72,
+        "y": 0.68,
+        "w": 0.28,
+        "h": 0.19,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene118.jpg",
+    "explanation": "笑顔の自撮りの後ろで、人が線路へ飛び出している……！",
+    "targets": [
+      {
+        "x": 0.385,
+        "y": 0.065,
+        "w": 0.25,
+        "h": 0.2,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene11.jpg",
     "explanation": "その人はそんな巨大なナイフで何を食べるつもりだろうか……？",
     "targets": [
@@ -459,6 +319,20 @@
         "w": 0.17,
         "h": 0.273,
         "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene121.jpg",
+    "explanation": "窓の外を黒い影が横切っている……",
+    "targets": [
+      {
+        "x": 0.815,
+        "y": 0.055,
+        "w": 0.185,
+        "h": 0.19,
+        "shape": "rect",
         "angle": 0
       }
     ]
@@ -530,6 +404,20 @@
         "h": 0.319,
         "shape": "ellipse",
         "angle": 25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene36.png",
+    "explanation": "泥棒だ！！",
+    "targets": [
+      {
+        "x": 0.025,
+        "y": 0.27,
+        "w": 0.177,
+        "h": 0.226,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -716,6 +604,20 @@
     ]
   },
   {
+    "src": "assets/scene100.png",
+    "explanation": "ん……？\nまたこのパターン……？",
+    "targets": [
+      {
+        "x": 0.877,
+        "y": 0.685,
+        "w": 0.122,
+        "h": 0.205,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene33.jpg",
     "explanation": "環境問題",
     "targets": [
@@ -739,6 +641,20 @@
         "w": 0.155,
         "h": 0.197,
         "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene115.png",
+    "explanation": "清掃カートの袋に、血の付いたゴミが……",
+    "targets": [
+      {
+        "x": 0,
+        "y": 0.65,
+        "w": 0.202,
+        "h": 0.116,
+        "shape": "rect",
         "angle": 0
       }
     ]
@@ -782,6 +698,20 @@
         "h": 0.138,
         "shape": "rect",
         "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene114.jpg",
+    "explanation": "ベッドの下に、刃物を持った男が潜んでいる……！",
+    "targets": [
+      {
+        "x": 0.212,
+        "y": 0.655,
+        "w": 0.156,
+        "h": 0.17,
+        "shape": "ellipse",
+        "angle": 45
       }
     ]
   },
@@ -837,6 +767,20 @@
         "w": 0.221,
         "h": 0.106,
         "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene111.png",
+    "explanation": "ガリバー旅行記に、桃太郎一行見参！！",
+    "targets": [
+      {
+        "x": 0.147,
+        "y": 0.795,
+        "w": 0.202,
+        "h": 0.091,
+        "shape": "rect",
         "angle": 0
       }
     ]
@@ -1010,6 +954,20 @@
     ]
   },
   {
+    "src": "assets/scene101.png",
+    "explanation": "釣れますか……？",
+    "targets": [
+      {
+        "x": 0.79,
+        "y": 0.267,
+        "w": 0.17,
+        "h": 0.096,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene44.jpg",
     "explanation": "4人でファミレスに来たのだが……\n店員には3人しか見えていないようだ",
     "targets": [
@@ -1075,6 +1033,20 @@
         "w": 0.131,
         "h": 0.113,
         "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene119.jpg",
+    "explanation": "試着室に監視カメラが設置されている……",
+    "targets": [
+      {
+        "x": 0.095,
+        "y": 0.025,
+        "w": 0.15,
+        "h": 0.075,
+        "shape": "rect",
         "angle": 0
       }
     ]
@@ -1234,6 +1206,20 @@
     ]
   },
   {
+    "src": "assets/scene109.png",
+    "explanation": "「時間を忘れそう……」\n忘れてます",
+    "targets": [
+      {
+        "x": 0.772,
+        "y": 0.055,
+        "w": 0.13,
+        "h": 0.079,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene57.jpg",
     "explanation": "布団の陰から何者かの手が……",
     "targets": [
@@ -1312,6 +1298,20 @@
         "y": 0.236,
         "w": 0.074,
         "h": 0.11,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene108.png",
+    "explanation": "月からの迎えは、宇宙服を着た人……？",
+    "targets": [
+      {
+        "x": 0.825,
+        "y": 0.36,
+        "w": 0.092,
+        "h": 0.088,
         "shape": "ellipse",
         "angle": 0
       }
@@ -1402,6 +1402,20 @@
     ]
   },
   {
+    "src": "assets/scene102.png",
+    "explanation": "一体どんな競技をしているのか不明だが……\n水槽に落ちたら大変なことになりそうだ",
+    "targets": [
+      {
+        "x": 0.677,
+        "y": 0.538,
+        "w": 0.055,
+        "h": 0.104,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene65.jpg",
     "explanation": "的の後に誰かが立っているようだが……",
     "targets": [
@@ -1454,6 +1468,20 @@
         "h": 0.039,
         "angle": -15,
         "shape": "rect"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene110.png",
+    "explanation": "お菓子の家に子豚は住んでいないはずだが……",
+    "targets": [
+      {
+        "x": 0.71,
+        "y": 0.158,
+        "w": 0.086,
+        "h": 0.066,
+        "shape": "ellipse",
+        "angle": 0
       }
     ]
   },
@@ -1556,6 +1584,20 @@
     ]
   },
   {
+    "src": "assets/scene112.png",
+    "explanation": "金の斧と銀の斧の持ち主は河童だったのか……？",
+    "targets": [
+      {
+        "x": 0.156,
+        "y": 0.143,
+        "w": 0.078,
+        "h": 0.046,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene71.jpg",
     "explanation": "お洒落な鳩だ",
     "targets": [
@@ -1598,6 +1640,20 @@
     ]
   },
   {
+    "src": "assets/scene107.png",
+    "explanation": "窓の外に、別のおとぎ話の二人組が迷い込んでいる……。",
+    "targets": [
+      {
+        "x": 0.919,
+        "y": 0.209,
+        "w": 0.045,
+        "h": 0.034,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene78.png",
     "explanation": "扉の隙間から覗く目は……？",
     "targets": [
@@ -1610,11 +1666,39 @@
         "angle": 0
       }
     ]
+  },
+  {
+    "src": "assets/scene105.png",
+    "explanation": "鞄の隙間から視線を感じる……",
+    "targets": [
+      {
+        "x": 0.531,
+        "y": 0.727,
+        "w": 0.05,
+        "h": 0.025,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene106.png",
+    "explanation": "道の先端に、靴だけが揃えて置かれている……。\n持ち主はどこへ行ったのだろうか？",
+    "targets": [
+      {
+        "x": 0.882,
+        "y": 0.145,
+        "w": 0.044,
+        "h": 0.019,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
   }
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261016-v58";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261020-v60";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
@@ -1868,7 +1952,7 @@
   function restoreStageOrder() {
     const playingSrc = stages[stageIndex]?.src;
     const editingSrc = stages[editStageIndex]?.src;
-    stages.sort((a, b) => defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
+    stages.sort((a, b) => stageArea(b) - stageArea(a) || defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
     stageIndex = Math.max(0, stages.findIndex(stage => stage.src === playingSrc));
     editStageIndex = Math.max(0, stages.findIndex(stage => stage.src === editingSrc));
     reachedStageIds.add(stages[0].src);
