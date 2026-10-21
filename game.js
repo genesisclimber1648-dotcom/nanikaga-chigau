@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v60_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v63_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v60_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v63_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261020-v60';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261020-v60';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261021-v63';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261021-v63';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -65,7 +65,7 @@
   },
   {
     "src": "assets/scene120.jpg",
-    "explanation": "撮られてるよ！！",
+    "explanation": "盗撮(？)されてるよ！！",
     "targets": [
       {
         "x": 0.69,
@@ -107,13 +107,13 @@
   },
   {
     "src": "assets/scene104.png",
-    "explanation": "真ん中のポールだけ棘だらけ……！\nこれでは滑り降りられない",
+    "explanation": "真ん中のポールだけ棘だらけ！\nこれでは使い物にならない……",
     "targets": [
       {
         "x": 0.45,
-        "y": 0.111,
+        "y": 0.081,
         "w": 0.097,
-        "h": 0.785,
+        "h": 0.89,
         "shape": "rect",
         "angle": 0
       }
@@ -198,6 +198,20 @@
     ]
   },
   {
+    "src": "assets/scene116.jpg",
+    "explanation": "未成年の飲酒は犯罪だよ！",
+    "targets": [
+      {
+        "x": 0.705,
+        "y": 0.679,
+        "w": 0.295,
+        "h": 0.205,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene8.jpg",
     "explanation": "奇麗な星空をよく観察すると、人知を超えた何かが現れているかもしれない……",
     "targets": [
@@ -213,7 +227,7 @@
   },
   {
     "src": "assets/scene117.jpg",
-    "explanation": "カーテンの陰に誰かが隠れているが……\nズボラな彼女は気付いていないようだ",
+    "explanation": "カーテンの陰に誰かが隠れているようだが……\nズボラな彼女は気付いていないようだ",
     "targets": [
       {
         "x": 0.1,
@@ -240,22 +254,8 @@
     ]
   },
   {
-    "src": "assets/scene116.jpg",
-    "explanation": "未成年の飲酒は犯罪だよ！",
-    "targets": [
-      {
-        "x": 0.72,
-        "y": 0.68,
-        "w": 0.28,
-        "h": 0.19,
-        "shape": "rect",
-        "angle": 0
-      }
-    ]
-  },
-  {
     "src": "assets/scene118.jpg",
-    "explanation": "笑顔の自撮りの後ろで、人が線路へ飛び出している……！",
+    "explanation": "とんでもない瞬間を捉えてしまった……",
     "targets": [
       {
         "x": 0.385,
@@ -703,7 +703,7 @@
   },
   {
     "src": "assets/scene114.jpg",
-    "explanation": "ベッドの下に、刃物を持った男が潜んでいる……！",
+    "explanation": "ベッドの下に……",
     "targets": [
       {
         "x": 0.212,
@@ -773,7 +773,7 @@
   },
   {
     "src": "assets/scene111.png",
-    "explanation": "ガリバー旅行記に、桃太郎一行見参！！",
+    "explanation": "ガリバーの危機を救うため、桃太郎一行見参！！",
     "targets": [
       {
         "x": 0.147,
@@ -843,7 +843,7 @@
   },
   {
     "src": "assets/scene22.jpg",
-    "explanation": "覗かれている……",
+    "explanation": "何者かが覗いている……",
     "targets": [
       {
         "x": 0.679,
@@ -871,7 +871,7 @@
   },
   {
     "src": "assets/scene40.jpg",
-    "explanation": "そのボトルの中身は一体……？",
+    "explanation": "「変な味のコーラだな……」\nそのボトルの中身は一体……？",
     "targets": [
       {
         "x": 0.754,
@@ -899,7 +899,7 @@
   },
   {
     "src": "assets/scene41.jpg",
-    "explanation": "それは新種の鶏だろうか……",
+    "explanation": "この食肉加工場には色々な動物の肉が入荷する\nそれは新種の鶏だろうか……",
     "targets": [
       {
         "x": 0.798,
@@ -1039,7 +1039,7 @@
   },
   {
     "src": "assets/scene119.jpg",
-    "explanation": "試着室に監視カメラが設置されている……",
+    "explanation": "試着室に監視カメラ……！？",
     "targets": [
       {
         "x": 0.095,
@@ -1207,7 +1207,7 @@
   },
   {
     "src": "assets/scene109.png",
-    "explanation": "「時間を忘れそう……」\n忘れてます",
+    "explanation": "「時間を忘れそう……」\n……完全に忘れてますね",
     "targets": [
       {
         "x": 0.772,
@@ -1235,7 +1235,7 @@
   },
   {
     "src": "assets/scene98.png",
-    "explanation": "この回廊自体が違和感だが、その栓を開けると何が起こるのだろうか……？",
+    "explanation": "この回廊自体違和感しかないが、その栓を開けると何が起こるのだろうか……？",
     "targets": [
       {
         "x": 0.06,
@@ -1514,6 +1514,20 @@
     ]
   },
   {
+    "src": "assets/scene123.jpg",
+    "explanation": "女性が隣の男性のポケットに手を入れて、何かを盗もうとしている……。",
+    "targets": [
+      {
+        "x": 0.265,
+        "y": 0.385,
+        "w": 0.075,
+        "h": 0.045,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
     "src": "assets/scene69.jpg",
     "explanation": "その手は一体……？",
     "targets": [
@@ -1543,7 +1557,7 @@
   },
   {
     "src": "assets/scene96.png",
-    "explanation": "おかしな物がパスタの上に……",
+    "explanation": "おかしな具がパスタの中にある……",
     "targets": [
       {
         "x": 0.69,
@@ -1585,7 +1599,7 @@
   },
   {
     "src": "assets/scene112.png",
-    "explanation": "金の斧と銀の斧の持ち主は河童だったのか……？",
+    "explanation": "金の斧と銀の斧の持ち主は河童……？",
     "targets": [
       {
         "x": 0.156,
@@ -1641,12 +1655,12 @@
   },
   {
     "src": "assets/scene107.png",
-    "explanation": "窓の外に、別のおとぎ話の二人組が迷い込んでいる……。",
+    "explanation": "別の次元から誰かやって来たようだ",
     "targets": [
       {
-        "x": 0.919,
+        "x": 0.917,
         "y": 0.209,
-        "w": 0.045,
+        "w": 0.05,
         "h": 0.034,
         "shape": "ellipse",
         "angle": 0
@@ -1698,7 +1712,7 @@
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261020-v60";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261021-v63";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
