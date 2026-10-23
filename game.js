@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v63_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v65_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v63_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v65_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261021-v63';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261021-v63';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261023-v65';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261023-v65';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -21,6 +21,170 @@
   wrongIconPreload.src = WRONG_ICON_SRC;
 
   const defaultStages =[
+  {
+    "src": "assets/scene124.jpg",
+    "explanation": "洗濯物に血が付いている……",
+    "targets": [
+      {
+        "x": 0.35,
+        "y": 0.925,
+        "w": 0.12,
+        "h": 0.075,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene125.jpg",
+    "explanation": "状況がよく分からないが……\nとりあえず不気味である",
+    "targets": [
+      {
+        "x": 0.33,
+        "y": 0.06,
+        "w": 0.3,
+        "h": 0.17,
+        "shape": "ellipse",
+        "angle": 0
+      },
+      {
+        "x": 0.169,
+        "y": 0.717,
+        "w": 0.173,
+        "h": 0.093,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene126.jpg",
+    "explanation": "鍵の数が合わない……\nどれかが偽物なのだろうか",
+    "targets": [
+      {
+        "x": 0.136,
+        "y": 0.253,
+        "w": 0.074,
+        "h": 0.072,
+        "shape": "ellipse",
+        "angle": 0
+      },
+      {
+        "x": 0.439,
+        "y": 0.37,
+        "w": 0.111,
+        "h": 0.096,
+        "shape": "ellipse",
+        "angle": -15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene127.jpg",
+    "explanation": "どうやって釣ったの……！？",
+    "targets": [
+      {
+        "x": 0.481,
+        "y": 0.269,
+        "w": 0.331,
+        "h": 0.672,
+        "shape": "ellipse",
+        "angle": 15
+      }
+    ]
+  },
+  {
+    "src": "assets/scene128.jpg",
+    "explanation": "現代の海に中世風の帆船が浮かんでいる……",
+    "targets": [
+      {
+        "x": 0.119,
+        "y": 0.089,
+        "w": 0.114,
+        "h": 0.055,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene129.jpg",
+    "explanation": "一人だけ悟り開いちゃってる……？",
+    "targets": [
+      {
+        "x": 0.386,
+        "y": 0.262,
+        "w": 0.226,
+        "h": 0.285,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene130.jpg",
+    "explanation": "ちゃんとお会計してから食べようね……",
+    "targets": [
+      {
+        "x": 0.338,
+        "y": 0.308,
+        "w": 0.184,
+        "h": 0.089,
+        "shape": "ellipse",
+        "angle": 0
+      },
+      {
+        "x": 0.414,
+        "y": 0.52,
+        "w": 0.214,
+        "h": 0.134,
+        "angle": 20,
+        "shape": "rect"
+      }
+    ]
+  },
+  {
+    "src": "assets/scene131.jpg",
+    "explanation": "何かに取り憑かれている……",
+    "targets": [
+      {
+        "x": 0.32,
+        "y": 0.083,
+        "w": 0.26,
+        "h": 0.335,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene132.jpg",
+    "explanation": "このパターン多いな……",
+    "targets": [
+      {
+        "x": 0.394,
+        "y": 0.117,
+        "w": 0.219,
+        "h": 0.065,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene133.jpg",
+    "explanation": "よく見ると木にドラゴンのような生き物が止まっている……",
+    "targets": [
+      {
+        "x": 0.832,
+        "y": 0.707,
+        "w": 0.168,
+        "h": 0.075,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
   {
     "src": "assets/scene1.jpg",
     "explanation": "お巡りさんこっちです！\n変な制服を着たお巡りさんが……！！",
@@ -1712,7 +1876,7 @@
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261021-v63";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261023-v65";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
@@ -1966,7 +2130,15 @@
   function restoreStageOrder() {
     const playingSrc = stages[stageIndex]?.src;
     const editingSrc = stages[editStageIndex]?.src;
-    stages.sort((a, b) => stageArea(b) - stageArea(a) || defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src));
+    const frontSources = defaultStages.slice(0, 10).map(stage => stage.src);
+    stages.sort((a, b) => {
+      const frontA = frontSources.indexOf(a.src);
+      const frontB = frontSources.indexOf(b.src);
+      if (frontA !== -1 || frontB !== -1) {
+        return (frontA === -1 ? 10 : frontA) - (frontB === -1 ? 10 : frontB);
+      }
+      return stageArea(b) - stageArea(a) || defaultStages.findIndex(s => s.src === a.src) - defaultStages.findIndex(s => s.src === b.src);
+    });
     stageIndex = Math.max(0, stages.findIndex(stage => stage.src === playingSrc));
     editStageIndex = Math.max(0, stages.findIndex(stage => stage.src === editingSrc));
     reachedStageIds.add(stages[0].src);
