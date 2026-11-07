@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v67_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v69_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v67_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v69_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261024-v67';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261024-v67';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261108-v69';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261108-v69';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -21,6 +21,48 @@
   wrongIconPreload.src = WRONG_ICON_SRC;
 
   const defaultStages =[
+  {
+    "src": "assets/scene142.jpg",
+    "explanation": "鏡の中の女性が不気味に笑っている……",
+    "targets": [
+      {
+        "x": 0.915,
+        "y": 0.34,
+        "w": 0.075,
+        "h": 0.065,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene143.jpg",
+    "explanation": "鳥居の奥の霧の中に、白い着物の女性が立っている……",
+    "targets": [
+      {
+        "x": 0.74,
+        "y": 0.465,
+        "w": 0.075,
+        "h": 0.115,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene144.jpg",
+    "explanation": "その箱の隙間から見える物は一体……？",
+    "targets": [
+      {
+        "x": 0.415,
+        "y": 0.66,
+        "w": 0.095,
+        "h": 0.035,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
   {
     "src": "assets/scene134.jpg",
     "explanation": "レーンに不気味な顔が浮かび上がっている……",
@@ -1988,7 +2030,7 @@
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261024-v67";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261108-v69";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
