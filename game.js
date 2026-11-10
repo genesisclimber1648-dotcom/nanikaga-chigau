@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v69_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v71_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v69_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v71_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261108-v69';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261108-v69';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261110-v71';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261110-v71';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -21,6 +21,286 @@
   wrongIconPreload.src = WRONG_ICON_SRC;
 
   const defaultStages =[
+  {
+    "src": "assets/scene145.jpg",
+    "explanation": "ここは誰用のトイレなのだろうか……？",
+    "targets": [
+      {
+        "x": 0.89,
+        "y": 0.09,
+        "w": 0.085,
+        "h": 0.115,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene146.jpg",
+    "explanation": "新種のポケ〇ンかな……？",
+    "targets": [
+      {
+        "x": 0.85,
+        "y": 0.808,
+        "w": 0.115,
+        "h": 0.07,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene147.jpg",
+    "explanation": "尻尾が生えているね……",
+    "targets": [
+      {
+        "x": 0.3,
+        "y": 0.75,
+        "w": 0.07,
+        "h": 0.1,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene148.jpg",
+    "explanation": "あれは何だろうか……？",
+    "targets": [
+      {
+        "x": 0.205,
+        "y": 0.012,
+        "w": 0.075,
+        "h": 0.025,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene149.jpg",
+    "explanation": "鏡に不気味な顔が映り込んでいる……",
+    "targets": [
+      {
+        "x": 0.495,
+        "y": 0.42,
+        "w": 0.105,
+        "h": 0.08,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene150.jpg",
+    "explanation": "それは卵ではないようだ……",
+    "targets": [
+      {
+        "x": 0.095,
+        "y": 0.683,
+        "w": 0.05,
+        "h": 0.035,
+        "shape": "ellipse",
+        "angle": 25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene151.jpg",
+    "explanation": "テーブルの下に人影が……",
+    "targets": [
+      {
+        "x": 0.65,
+        "y": 0.951,
+        "w": 0.18,
+        "h": 0.049,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene152.jpg",
+    "explanation": "誰か来てるよ……！！",
+    "targets": [
+      {
+        "x": 0.484,
+        "y": 0.066,
+        "w": 0.065,
+        "h": 0.025,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene153.jpg",
+    "explanation": "謎の手が手摺を掴んでいる……",
+    "targets": [
+      {
+        "x": 0,
+        "y": 0.73,
+        "w": 0.298,
+        "h": 0.242,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene154.jpg",
+    "explanation": "海の中に謎の扉が立っている……\nそれはそうと、その生き物に触るのは危険だよ！！",
+    "targets": [
+      {
+        "x": 0.58,
+        "y": 0.22,
+        "w": 0.12,
+        "h": 0.105,
+        "shape": "rect",
+        "angle": 5
+      }
+    ]
+  },
+  {
+    "src": "assets/scene155.jpg",
+    "explanation": "いくら何でもその脚は巨大すぎるのでは……",
+    "targets": [
+      {
+        "x": 0.573,
+        "y": 0.5,
+        "w": 0.18,
+        "h": 0.325,
+        "shape": "rect",
+        "angle": -25
+      }
+    ]
+  },
+  {
+    "src": "assets/scene156.jpg",
+    "explanation": "謎の人影がこちらを見ている……",
+    "targets": [
+      {
+        "x": 0.825,
+        "y": 0.212,
+        "w": 0.115,
+        "h": 0.12,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene157.jpg",
+    "explanation": "屋上から見下ろす謎の人影……\nモンスターを狩りに来たのだろうか",
+    "targets": [
+      {
+        "x": 0.033,
+        "y": 0.008,
+        "w": 0.124,
+        "h": 0.086,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene158.jpg",
+    "explanation": "時計の針が人間の指のようだが……",
+    "targets": [
+      {
+        "x": 0.19,
+        "y": 0.09,
+        "w": 0.15,
+        "h": 0.05,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene159.jpg",
+    "explanation": "謎の生き物発掘しちゃった……？",
+    "targets": [
+      {
+        "x": 0.71,
+        "y": 0.75,
+        "w": 0.15,
+        "h": 0.09,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene160.jpg",
+    "explanation": "水中なのにランタンが燃えている……\nそれにしても凄い肺活量だね",
+    "targets": [
+      {
+        "x": 0.824,
+        "y": 0.085,
+        "w": 0.11,
+        "h": 0.09,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene161.jpg",
+    "explanation": "青白い顔が覗いている……",
+    "targets": [
+      {
+        "x": 0.885,
+        "y": 0.25,
+        "w": 0.06,
+        "h": 0.075,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene162.jpg",
+    "explanation": "何の卵かな……？",
+    "targets": [
+      {
+        "x": 0.71,
+        "y": 0.07,
+        "w": 0.135,
+        "h": 0.075,
+        "shape": "ellipse",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene163.jpg",
+    "explanation": "そのポケットに入っている物は……",
+    "targets": [
+      {
+        "x": 0.74,
+        "y": 0.36,
+        "w": 0.14,
+        "h": 0.1,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
+  {
+    "src": "assets/scene164.jpg",
+    "explanation": "トイレの中にラバーダックが置かれている……\n実はお風呂！？",
+    "targets": [
+      {
+        "x": 0.963,
+        "y": 0.577,
+        "w": 0.037,
+        "h": 0.036,
+        "shape": "rect",
+        "angle": 0
+      }
+    ]
+  },
   {
     "src": "assets/scene142.jpg",
     "explanation": "鏡の中の女性が不気味に笑っている……",
@@ -2030,7 +2310,7 @@
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261108-v69";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261110-v71";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 
