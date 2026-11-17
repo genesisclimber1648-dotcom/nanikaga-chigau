@@ -1,17 +1,17 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'iwakan_targets_v77_by_src';
+  const STORAGE_KEY = 'iwakan_targets_v80_by_src';
   const LEGACY_TARGET_STORAGE_KEYS = []; // v58 uses the supplied reviewed defaults.
-  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v77_by_src';
+  const EXPLANATION_STORAGE_KEY = 'iwakan_explanations_v80_by_src';
   const LEGACY_EXPLANATION_STORAGE_KEYS = [];
   const STAGE_SELECT_UNLOCK_KEY = 'iwakan_stage_select_unlocked_v46_75stages_sorted';
   const CLEARED_PROGRESS_KEY = 'iwakan_progress_v47_by_src';
   const PREVIOUS_STAGE_SELECT_UNLOCK_KEYS = ['iwakan_stage_select_unlocked_v44_74stages', 'iwakan_stage_select_unlocked_v43_72stages', 'iwakan_stage_select_unlocked_v41_72stages', 'iwakan_stage_select_unlocked_v40_72stages'];
   const EDIT_STEP = 0.005;
   const MIN_SIZE = 0.01;
-  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261116-v77';
-  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261116-v77';
+  const CORRECT_ICON_SRC = 'assets/correct.png?v=20261117-v80';
+  const WRONG_ICON_SRC = 'assets/wrong.png?v=20261117-v80';
   const BGM_SRCS = ['assets/bgm_track1.mp3', 'assets/bgm_track2.mp3', 'assets/bgm_track3.mp3', 'assets/bgm_track4.mp3', 'assets/bgm_track5.mp3'];
 
   // Preload result icons so the feedback appears immediately on the first tap.
@@ -21,6 +21,105 @@
   wrongIconPreload.src = WRONG_ICON_SRC;
 
   const defaultStages =[
+  {
+    "src": "assets/scene196.jpg",
+    "targets": [
+      {
+        "x": 0.672,
+        "y": 0.079,
+        "w": 0.083,
+        "h": 0.037,
+        "shape": "ellipse"
+      }
+    ],
+    "explanation": "炎の中に人の顔……！？"
+  },
+  {
+    "src": "assets/scene197.jpg",
+    "target": {
+      "x": 0.727,
+      "y": 0.219,
+      "w": 0.196,
+      "h": 0.207
+    },
+    "explanation": "そのライオンは着ぐるみに見えるなぁ……"
+  },
+  {
+    "src": "assets/scene198.jpg",
+    "targets": [
+      {
+        "x": 0.126,
+        "y": 0.78,
+        "w": 0.35,
+        "h": 0.145,
+        "shape": "ellipse",
+        "angle": -15
+      }
+    ],
+    "explanation": "落ちたら巨大サソリの餌食……！？"
+  },
+  {
+    "src": "assets/scene199.jpg",
+    "targets": [
+      {
+        "x": 0.368,
+        "y": 0.457,
+        "w": 0.16,
+        "h": 0.063,
+        "angle": -35
+      }
+    ],
+    "explanation": "そんな物で歯磨きしたら……"
+  },
+  {
+    "src": "assets/scene192.jpg",
+    "targets": [
+      {
+        "x": 0.426,
+        "y": 0.583,
+        "w": 0.047,
+        "h": 0.064,
+        "angle": 30
+      }
+    ],
+    "explanation": "何してるの……？"
+  },
+  {
+    "src": "assets/scene193.jpg",
+    "target": {
+      "x": 0,
+      "y": 0,
+      "w": 1,
+      "h": 0.47
+    },
+    "explanation": "画面全体に違和感しかないのだが……"
+  },
+  {
+    "src": "assets/scene194.jpg",
+    "targets": [
+      {
+        "x": 0.6,
+        "y": 0.799,
+        "w": 0.108,
+        "h": 0.033,
+        "shape": "ellipse"
+      }
+    ],
+    "explanation": "階段の隙間から誰かが覗いている……"
+  },
+  {
+    "src": "assets/scene195.jpg",
+    "targets": [
+      {
+        "x": 0.753,
+        "y": 0.03,
+        "w": 0.077,
+        "h": 0.034,
+        "shape": "ellipse"
+      }
+    ],
+    "explanation": "サウナの天井に穴が開いているようだ……"
+  },
   {
     "src": "assets/scene179.jpg",
     "explanation": "海に浮かんでいる船が随分古いもののように見える……",
@@ -51,17 +150,16 @@
   },
   {
     "src": "assets/scene181.jpg",
-    "explanation": "荷箱の中には誰が入っているのだろうか……",
     "targets": [
       {
         "x": 0.595,
         "y": 0.5,
         "w": 0.045,
         "h": 0.025,
-        "shape": "ellipse",
-        "angle": 0
+        "shape": "ellipse"
       }
-    ]
+    ],
+    "explanation": "荷箱には誰が入っているのだろうか……"
   },
   {
     "src": "assets/scene182.jpg",
@@ -121,31 +219,29 @@
   },
   {
     "src": "assets/scene186.jpg",
-    "explanation": "それは花ではないね。\nブロッコリーにしては大きいようだが……",
     "targets": [
       {
         "x": 0.23,
         "y": 0.405,
         "w": 0.315,
         "h": 0.155,
-        "shape": "ellipse",
-        "angle": 0
+        "shape": "ellipse"
       }
-    ]
+    ],
+    "explanation": "それは花ではないね。\nブロッコリーにしては大きいようだけど……"
   },
   {
     "src": "assets/scene187.jpg",
-    "explanation": "時計の「8」の位置が「3」になっている……",
     "targets": [
       {
         "x": 0.195,
-        "y": 0.103,
+        "y": 0.106,
         "w": 0.05,
-        "h": 0.035,
-        "shape": "ellipse",
-        "angle": 0
+        "h": 0.03,
+        "shape": "ellipse"
       }
-    ]
+    ],
+    "explanation": "時計の「8」の位置が「3」になっている……"
   },
   {
     "src": "assets/scene188.jpg",
@@ -163,17 +259,17 @@
   },
   {
     "src": "assets/scene189.jpg",
-    "explanation": "壁の亀裂から、誰かが覗いている……",
     "targets": [
       {
         "x": 0.795,
         "y": 0.19,
         "w": 0.05,
         "h": 0.11,
-        "shape": "rect",
-        "angle": 0
+        "shape": "ellipse",
+        "angle": 5
       }
-    ]
+    ],
+    "explanation": "壁の亀裂から、誰かが覗いている……"
   },
   {
     "src": "assets/scene190.jpg",
@@ -2698,7 +2794,7 @@
 ];
   const legacyStageSources = ["assets/scene1.jpg","assets/scene2.jpg","assets/scene3.jpg","assets/scene4.jpg","assets/scene5.jpg","assets/scene6.jpg","assets/scene7.jpg","assets/scene9.jpg","assets/scene8.jpg","assets/scene11.jpg","assets/scene10.jpg","assets/scene12.jpg","assets/scene15.jpg","assets/scene16.jpg","assets/scene39.jpg","assets/scene14.jpg","assets/scene17.jpg","assets/scene19.jpg","assets/scene13.jpg","assets/scene24.jpg","assets/scene20.jpg","assets/scene21.jpg","assets/scene23.jpg","assets/scene25.jpg","assets/scene18.jpg","assets/scene33.jpg","assets/scene27.jpg","assets/scene28.jpg","assets/scene29.jpg","assets/scene30.jpg","assets/scene31.jpg","assets/scene32.jpg","assets/scene34.jpg","assets/scene35.jpg","assets/scene36.png","assets/scene37.jpg","assets/scene38.jpg","assets/scene22.jpg","assets/scene26.jpg","assets/scene40.jpg","assets/scene41.jpg","assets/scene42.jpg","assets/scene43.jpg","assets/scene44.jpg","assets/scene45.jpg","assets/scene46.jpg","assets/scene47.jpg","assets/scene48.jpg","assets/scene49.jpg","assets/scene73.jpg","assets/scene50.jpg","assets/scene51.jpg","assets/scene52.jpg","assets/scene53.jpg","assets/scene54.jpg","assets/scene55.jpg","assets/scene56.jpg","assets/scene57.jpg","assets/scene58.jpg","assets/scene59.jpg","assets/scene60.jpg","assets/scene64.jpg","assets/scene61.jpg","assets/scene62.jpg","assets/scene63.jpg","assets/scene65.jpg","assets/scene74.jpg","assets/scene66.jpg","assets/scene67.jpg","assets/scene68.jpg","assets/scene75.png","assets/scene69.jpg","assets/scene70.jpg","assets/scene71.jpg","assets/scene72.jpg"];
   // Keep stable save-data IDs while loading the optimized JPEG assets.
-  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261116-v77";
+  const stageImageSrc = (src) => src.replace(/\.png$/i, ".jpg") + "?v=20261117-v80";
   const deepClone = (value) => JSON.parse(JSON.stringify(value));
   const stages = deepClone(defaultStages);
 

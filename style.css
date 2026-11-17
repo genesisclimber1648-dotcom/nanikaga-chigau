@@ -120,9 +120,10 @@ button { font: inherit; }
 .minimal-actions {
   display: flex;
   gap: 7px;
-  pointer-events: auto;
+  pointer-events: none;
 }
 .icon-button {
+  pointer-events: auto;
   width: 36px;
   height: 36px;
   display: grid;
